@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: Build frontend and backend
 on: [push]
 jobs:
   frontend-build:
