@@ -60,7 +60,7 @@
           @if (form.controls['Location'].errors) {
             <span class="font-bold bg-red-500 text-white"> Location is Required </span>         
               }
-        <crash-map (m_weather)="getWeather($event)" (m_address)="getAddress($event)" (m_weathericon)="getWeatherIcon($event)"></crash-map>
+        <crash-map (m_weather)="setWeather($event)" (m_address)="setAddress($event)" (m_weathericon)="setWeatherIcon($event)"></crash-map>
       </div>
       <br>
       <div class="form-group">
@@ -98,9 +98,9 @@
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Images">
           Accident Images
         </label>
-        <crash-upload-images (m_image)="getImage1($event)"></crash-upload-images>
-        <crash-upload-images (m_image)="getImage2($event)"></crash-upload-images>
-        <crash-upload-images (m_image)="getImage3($event)"></crash-upload-images>
+        <crash-upload-images (m_image)="setImage1($event)"></crash-upload-images>
+        <crash-upload-images (m_image)="setImage2($event)"></crash-upload-images>
+        <crash-upload-images (m_image)="setImage3($event)"></crash-upload-images>
       </div>
       <br>
       <button type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Submit</button>

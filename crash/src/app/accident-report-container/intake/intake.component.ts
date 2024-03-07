@@ -43,7 +43,7 @@ Image3: any;
   selectedFile: File | null = null;
 
   constructor(private formBuilder: FormBuilder ) {
- 
+      
   }
    
   public location: string='';
@@ -52,28 +52,31 @@ Image3: any;
   ngOnInit() {
     var datePipe = new DatePipe('en-US');
     this.form.controls["TimeIncident"].setValue(datePipe.transform(new Date(),'h:mm a'));
+ 
   }
  
  
-getAddress(thelocation : any){
+setAddress(thelocation : any){
     this.form.controls["Location"].setValue(thelocation);
    
 }
  
-getWeather(theweather:any){
+setWeather(theweather:any){
     this.form.controls["WeatherConditions"].setValue(theweather);
    }
-getWeatherIcon(theweathericon:any){
+setWeatherIcon(theweathericon:any){
       this.WeatherIcon=theweathericon;
       console.log(theweathericon)
    }
-getImage1(img:any){
+
+ 
+setImage1(img:any){
   this.Image1=img;
 }
-getImage2(img:any){
+setImage2(img:any){
   this.Image2=img;
 }
-getImage3(img:any){
+setImage3(img:any){
   this.Image3=img;
 }
 
@@ -94,6 +97,7 @@ onSubmit(): void{
   console.log(this.Image1)
   console.log(this.Image2)
   console.log(this.Image3)
+ 
 }
 
 }
