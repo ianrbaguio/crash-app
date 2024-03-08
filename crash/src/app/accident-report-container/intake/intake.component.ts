@@ -1,6 +1,6 @@
 
-import { Component ,OnInit  } from '@angular/core';
-import { CommonModule, DatePipe, JsonPipe } from '@angular/common';
+import { Component ,OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule, DatePipe} from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder,FormGroup,FormControl, ReactiveFormsModule ,Validators} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -9,7 +9,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';  
 import { MapComponent} from '../map/map.component'
 import { UploadComponent } from '../upload-images/upload.component'; 
-
+import {BreakpointObserver } from '@angular/cdk/layout';
 @Component({
   selector: 'crash-intake',
   standalone: true,
@@ -39,10 +39,10 @@ WeatherIcon:string =''
 Image1: any;
 Image2: any;
 Image3: any;
- 
+smallscreen: boolean =false;
   selectedFile: File | null = null;
 
-  constructor(private formBuilder: FormBuilder ) {
+  constructor(private observer : BreakpointObserver,private cdf: ChangeDetectorRef, private formBuilder: FormBuilder ) {
       
   }
    
@@ -54,7 +54,15 @@ Image3: any;
     this.form.controls["TimeIncident"].setValue(datePipe.transform(new Date(),'h:mm a'));
  
   }
- 
+  ngAfterViewInit(): void {
+    // if small screen is in use dont use 'flex justify-center ...' div class name so that the controls will fit
+    this.observer.observe(['(max-width:787px)']).subscribe(
+      (res)=>{
+          this.smallscreen=res?.matches
+      }
+    );
+    this.cdf.detectChanges(); 
+}
  
 setAddress(thelocation : any){
     this.form.controls["Location"].setValue(thelocation);

@@ -1,4 +1,4 @@
-<div id="info" class="flex justify-center ...">
+<div id="info" [ngClass]="{'flex justify-center ...': !this.smallscreen}">
   <div >
     <h2 class="pb-2">Crash Entry</h2>
     <p class="text-red-500 text-xs italic">Please fill out this form.</p>
