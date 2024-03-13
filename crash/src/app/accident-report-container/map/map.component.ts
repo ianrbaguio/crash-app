@@ -158,22 +158,11 @@ export class MapComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res.results);
-
           /* this.spawnPlaces(res.results) */
         });
 
   }
-    /*  private spawnPlaces(landmarks:any[]){
-      console.log(landmarks.length)
-      if (landmarks.length>0)
-      for(let i=0; i<2; i++){
-        this.crashservice.getPlacesDetail(landmarks[i].place_id).subscribe(
-            (res1:any) => {
-              let v=res1.result; 
-            }
-        ); 
-      }  
-    } */
+    
   getWeather() {
 
     const radius = 1000;
