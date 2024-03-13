@@ -38,12 +38,7 @@ getPlacesDetail(placeID: string){
 }
 
 getWeather(latitude: number, longitude: number, radius: number): any{
- 
-   /* console.log(`${environment.WEATHER_Endpoint}
-        &lat=${latitude}
-        &lon=${longitude}
-        &appid=${environment.WEATHER_API_KEY}`); */
-
+  
    return this.http.get(`${environment.WEATHER_Endpoint}&lat=${latitude}&lon=${longitude}&appid=${environment.WEATHER_API_KEY}`);
 }
 

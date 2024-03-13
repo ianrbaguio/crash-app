@@ -1,34 +1,43 @@
 <mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <span  [hidden]="panelOpenState">Find location in Map </span>
-       
-            &nbsp;&nbsp;&nbsp;
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="collectInformation()"  *ngIf="panelOpenState">
-              Get Address & Weather
-            </button>
-        </mat-panel-title>
-        <mat-panel-description>
-          
-         
-          
-   
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <google-map height="600px"
-      width="750px"
-      [center]="center"
-      [zoom]="zoom"
-      (mapClick)="moveMap($event)"
-      (mapMousemove)="move($event)" 
-      (mapClick)="click($event)">
-      <map-marker *ngFor="let marker of markers"
-      [position]="marker.position"></map-marker>
-  </google-map> 
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span [hidden]="panelOpenState">Find location in Map </span>
+        <!--  -->
+        &nbsp;&nbsp;&nbsp;
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="collectInformation()" *ngIf="panelOpenState">
+          Get Address & Weather
+        </button>
+      </mat-panel-title>
 
-  <div id="map_canvas" style="width: 50%; height: 50%">
-  </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+    </mat-expansion-panel-header>
+
+    <div id="map" style="width: 50%; height: 50%">
+
+      <!-- <google-map height="600px"
+          width="750px"
+          [center]="center"
+          [zoom]="zoom"
+          (mapClick)="moveMap($event)"
+          (mapMousemove)="move($event)" 
+          (mapClick)="click($event)">
+          <map-marker *ngFor="let marker of markers"
+          [position]="marker.position"></map-marker> 
+      </google-map>      -->
+      <google-map 
+            height="600px" 
+            width="750px" 
+            [center]="center" [zoom]="zoom" 
+            (mapClick)="moveMap($event)"
+            (mapClick)="click($event)" 
+            mapId="crashmap">
+            @for (position of markerPositions; track position) {
+            <map-advanced-marker [position]="position" />
+            }
+      </google-map>
+
+    </div>
+
+  </mat-expansion-panel>
+</mat-accordion>

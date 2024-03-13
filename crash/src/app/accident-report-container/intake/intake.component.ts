@@ -73,8 +73,7 @@ setWeather(theweather:any){
     this.form.controls["WeatherConditions"].setValue(theweather);
    }
 setWeatherIcon(theweathericon:any){
-      this.WeatherIcon=theweathericon;
-      console.log(theweathericon)
+      this.WeatherIcon=theweathericon; 
    }
 
  
@@ -96,15 +95,8 @@ onSubmit(): void{
     console.log("Field validations failed")
     return;
   }
-  console.log(
-    `You entered :  
-    ${this.form.controls['Party'].value},
-    ${this.form.controls['WeatherConditions'].value},
-    ${this.form.controls['Location'].value}`
-  );
-  console.log(this.Image1)
-  console.log(this.Image2)
-  console.log(this.Image3)
+  // post to API
+
  
 }
 
