@@ -19,10 +19,7 @@ getNearbyPlaces(latitude: number, longitude: number)  {
   queryParams = queryParams.append("type","business");
   queryParams = queryParams.append("rankby","distance");
   queryParams = queryParams.append("key",environment.GOOGLE_API_KEY);
- console.log(environment.GOOGLE_NEARBY_Endpoint)
-
-
-   return this.http.get(environment.GOOGLE_NEARBY_Endpoint,{  params: queryParams });
+  return this.http.get(environment.GOOGLE_NEARBY_Endpoint,{  params: queryParams });
         
     
 }
@@ -37,9 +34,8 @@ getPlacesDetail(placeID: string){
      return this.http.get(environment.PLACES_Endpoint,{params: queryParams,responseType : 'json'});
 }
 
-getWeather(latitude: number, longitude: number, radius: number): any{
-  
-   return this.http.get(`${environment.WEATHER_Endpoint}&lat=${latitude}&lon=${longitude}&appid=${environment.WEATHER_API_KEY}`);
-}
+getWeather(latitude: number, longitude: number, radius: number): any{ 
+     return this.http.get(`${environment.WEATHER_Endpoint}&lat=${latitude}&lon=${longitude}&appid=${environment.WEATHER_API_KEY}`);
+  }
 
 }

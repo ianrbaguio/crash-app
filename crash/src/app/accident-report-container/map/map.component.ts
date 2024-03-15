@@ -38,15 +38,7 @@ export class MapComponent implements OnInit {
 
     loader
       .importLibrary('maps')
-      /*  
-      dynamic loading of map does not work
-      .then(({Map}) => {
-          new google.maps.Map(document.getElementById("map") as HTMLElement,this.options);
-       })  */
-      .catch((e) => {
-        // do something
-        console.log("error caught");
-        console.log(e);
+      .catch((e) => {  
       });
 
   }
@@ -157,8 +149,7 @@ export class MapComponent implements OnInit {
     this.crashservice.getNearbyPlaces(latlng.lat, latlng.lng)
       .subscribe(
         (res: any) => {
-          console.log(res.results);
-          /* this.spawnPlaces(res.results) */
+      
         });
 
   }

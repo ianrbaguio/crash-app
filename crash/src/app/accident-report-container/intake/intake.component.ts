@@ -92,10 +92,9 @@ setImage3(img:any){
 onSubmit(): void{
   this.submitted = true;
   if (this.form.invalid) {
-    console.log("Field validations failed")
     return;
   }
-  // post to API
+
 
  
 }
