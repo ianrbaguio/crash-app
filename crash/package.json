@@ -8,7 +8,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:crash": "node dist/crash/server/server.mjs"
+    "serve:ssr:crash": "node dist/crash/server/server.mjs",
+    "postgres-init": "node .data/init.js"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "@googlemaps/js-api-loader": "^1.16.6",
     "express": "^4.18.2",
     "ngx-mat-timepicker": "^17.0.3",
+    "pg": "^8.11.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

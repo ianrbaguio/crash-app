@@ -2,7 +2,7 @@
 using Crash.Models.Dtos;
 using MediatR;
 
-namespace Crash.Handlers
+namespace Crash.Query.Handlers
 {
    public class GetAccidentsQueryHandler : IRequestHandler<GetAccidentsQuery, List<AccidentDto>>
    {
