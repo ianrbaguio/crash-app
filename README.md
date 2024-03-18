@@ -21,7 +21,15 @@ Once you have installed and build the app, run the command to start the app:
 
 • Run pgAdmin app or run your PostgreSQL locally through a command line
 • Create a new Database and name it "Crash"
-• Once you have created the database, open up a terminal and from the project's path, run the following commands:
+• Change the connection string values to `init.js` and `appsettings.json` files
+to your db connection properties for:
+
+- user
+- password
+- host
+- port
+- database
+  • Once you have created the database, open up a terminal and from the project's path, run the following commands:
 
 `cd crash`
 `npm run postgres-init`
