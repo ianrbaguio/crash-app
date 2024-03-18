@@ -29,6 +29,7 @@ to your db connection properties for:
 - host
 - port
 - database
+
   • Once you have created the database, open up a terminal and from the project's path, run the following commands:
 
 `cd crash`
