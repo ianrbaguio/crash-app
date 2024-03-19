@@ -1,9 +1,9 @@
-<div class="title">
+<div>
     <label (click)="dataSortAndPagination()">Accidents</label>
   </div>
   
-  <div class="example-container mat-elevation-z8">
-    <mat-table class="table" [dataSource]="dataSource1" matSort>
+  <div>
+    <mat-table [dataSource]="dataSource1" matSort>
       <!-- Location Column -->
       <ng-container matColumnDef="Location">
         <mat-header-cell *matHeaderCellDef mat-sort-header > Location </mat-header-cell>
