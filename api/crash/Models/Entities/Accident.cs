@@ -4,15 +4,15 @@ namespace Crash.Models.Entities
 {
    public class Accident
    {
-      public Guid Id {get; set;}
-      public int AccidentId {get; set;}
-      public string Location {get; set;}
+      public Guid id {get; set;}
+      public int accident_id {get; set;}
+      public string location {get; set;}
 
-      public DateTime AccidentDate {get; set;}
+      public DateTime accident_date {get; set;}
 
-      public string Daylight {get; set;}
-      public double EstimatedCost {get; set;}
-      public int NumberOfParties {get; set;}
-      public List<string> Parties { get; set;} = new List<string>();
+      public string daylight {get; set;}
+      public double estimated_cost {get; set;}
+      public int number_of_parties {get; set;}
+      public List<string> parties { get; set;} = new List<string>();
    }
 }
