@@ -38,16 +38,4 @@ getWeather(latitude: number, longitude: number, radius: number): any{
      return this.http.get(`${environment.WEATHER_Endpoint}&lat=${latitude}&lon=${longitude}&appid=${environment.WEATHER_API_KEY}`);
   }
 
-addAccident(requestBody: any){
-    return this.http.post('https://localhost:44324/api/Accidents',requestBody);
 }
-uploadImages( images: FormData, accidentId:any){
-    return this.http.post('https://localhost:44324/api/accidents/uploadimages',images);
-}
-getAccidents(){
-    return this.http.get('https://localhost:44324/api/Accidents')
-}
-
-}
-
-

@@ -1,1 +1,8 @@
-<crash-view-accidents></crash-view-accidents>>
+@if (!viewMapCrashSites){
+    <crash-view-accidents></crash-view-accidents>
+}
+<mat-checkbox class="example-margin"  (change)="this.viewMapCrashSites=!this.viewMapCrashSites">View Map Crash Sites</mat-checkbox>
+    @if (viewMapCrashSites) {
+        <crash-map-accident></crash-map-accident>       
+     }
+

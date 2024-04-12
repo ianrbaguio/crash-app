@@ -9,7 +9,7 @@
 </div>
 
 <div>
-  <img #previewRef  class="preview" />
+  <img [src]="preview" class="preview" />
 </div>
 
 @if (message) {
