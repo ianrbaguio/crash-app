@@ -39,13 +39,13 @@ getWeather(latitude: number, longitude: number, radius: number): any{
   }
 
 addAccident(requestBody: any){
-    return this.http.post('https://localhost:44324/api/Accidents',requestBody);
+    return this.http.post(`${environment.Crash_API_Endpoint}/api/Accidents`,requestBody);
 }
 uploadImages( images: FormData, accidentId:any){
-    return this.http.post('https://localhost:44324/api/accidents/uploadimages',images);
+    return this.http.post(`${environment.Crash_API_Endpoint}/api/accidents/uploadimages`,images);
 }
 getAccidents(){
-    return this.http.get('https://localhost:44324/api/Accidents')
+    return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents`)
 }
 
 }
