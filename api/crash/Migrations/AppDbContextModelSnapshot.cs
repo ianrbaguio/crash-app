@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 
 #nullable disable
 
@@ -43,21 +42,15 @@ namespace Crash.Migrations
                     b.Property<double>("EstimatedCost")
                         .HasColumnType("double precision");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("text");
-                 
-                    b.Property<string>("Weather")
-                     .IsRequired()
-                     .HasColumnType("text");
 
-                    b.Property<string>("Latitude")
-                       .IsRequired()
-                       .HasColumnType("double precision");
-
-                    b.Property<string>("Longitude")
-                    .IsRequired()
-                    .HasColumnType("double precision");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("NumberOfParties")
                         .HasColumnType("integer");
@@ -66,28 +59,49 @@ namespace Crash.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("Weather")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("accident");
                 });
 
+            modelBuilder.Entity("Crash.Models.Entities.CrashUser", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("crashuser");
+                });
 
             modelBuilder.Entity("Crash.Models.Entities.Image", b =>
-            {
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                b.Property<int>("Id")
-                         .ValueGeneratedOnAdd()
-                         .HasColumnType("integer");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                b.Property<Guid>("AccidentId")
-                    .HasColumnType("uuid");
+                    b.Property<Guid>("AccidentId")
+                        .HasColumnType("uuid");
 
-                b.Property<NpgsqlByteArrayMethodTranslator>("ImageData")
-                    .HasColumnType("integer");
-              
-                b.HasKey("Id");
-                b.ToTable("image");
-            });
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("image");
+                });
 #pragma warning restore 612, 618
         }
     }

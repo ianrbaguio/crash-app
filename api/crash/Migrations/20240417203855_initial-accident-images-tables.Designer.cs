@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Crash.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240322175322_initial")]
-    partial class initial
+    [Migration("20240417203855_initial-accident-images-tables")]
+    partial class initialaccidentimagestables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,9 +45,15 @@ namespace Crash.Migrations
                     b.Property<double>("EstimatedCost")
                         .HasColumnType("double precision");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("NumberOfParties")
                         .HasColumnType("integer");
@@ -56,28 +62,49 @@ namespace Crash.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("Weather")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Accidents");
+                    b.ToTable("accident");
                 });
 
-            modelBuilder.Entity("Crash.Models.Entities.Images", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
+            modelBuilder.Entity("Crash.Models.Entities.CrashUser", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                b.Property<Guid>("AccidentId")
-                    .HasColumnType("uuid");
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                b.Property<List<string>>("ImageData")
-                    .IsRequired()
-                    .HasColumnType("bytea");
+                    b.HasKey("id");
 
-                b.HasKey("Id");
+                    b.ToTable("crashuser");
+                });
 
-                b.ToTable("Images");
-            });
+            modelBuilder.Entity("Crash.Models.Entities.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("AccidentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("image");
+                });
 #pragma warning restore 612, 618
         }
     }
