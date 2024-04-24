@@ -1,17 +1,26 @@
 
 
 import { Component, OnInit, } from '@angular/core';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule} from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from '../../../environments/environment';
 import { CrashService } from '../../crash.service';
+import {MapDialogComponent} from '../view-map-detail/mapdialog.component'
+import { MatDialog } from '@angular/material/dialog';
 
 
+interface IAccident {
+  address: string
+  description: string,
+  position:  google.maps.LatLngLiteral,
+  accidentDate: Date,
+  estimatedCost: number
+}
 
 @Component({
   selector: 'crash-map-accident',
@@ -23,26 +32,18 @@ import { CrashService } from '../../crash.service';
   styleUrl: './search-map.component.scss',
 })
 
+export class SearchMapComponent  implements OnInit {
 
-export class SearchMapComponent implements OnInit {
   markers: google.maps.marker.AdvancedMarkerElement[] = [];
   public map!: any;
   center: google.maps.LatLngLiteral = {
     lat: 53.540235028,
     lng: -113.49818175
   };
-
-  crashsites = [{
-    address: 'NW Edmonton',
-    description: 'Incident 03/21/2024',
-    position: {
-      lat: 53.550235028,
-      lng: -113.58818175,
-    }
-  }]
+ rectangle!: google.maps.Rectangle
+ crashsites: IAccident[]  = []
   
-
-  constructor(private crashservice:CrashService) { }
+ constructor(private crashservice:CrashService,private dialog: MatDialog ) { }
 
   loadAPIMapscript() {
 
@@ -64,12 +65,11 @@ export class SearchMapComponent implements OnInit {
       });
 
   }
-
+  infowindow! : google.maps.InfoWindow ; 
   ngOnInit() {
     // use googlemaps/js-api-loader to dynamically load google scripts, this is needed so that
     // we dont need to use google script url with exposed hardcoded API_Key in index.html
     this.loadAPIMapscript();
-    this.getAccidents();
   }
 
   async initMap() {
@@ -88,6 +88,7 @@ export class SearchMapComponent implements OnInit {
 
       this.map = map 
       const rectangle = this.defineMapRectangle();
+      this.rectangle= rectangle;
       this.defineDocumentElements(rectangle)
     }
     catch (e) { }
@@ -128,7 +129,7 @@ export class SearchMapComponent implements OnInit {
       .addEventListener("click", (event) => this.clearMarkers());
     document
       .getElementById("put-markers")!
-      .addEventListener("click", (event) =>  this.putMarkers(rectangle)
+      .addEventListener("click", (event) =>  this.processMarkers() 
       );
 
       this.map.addListener("zoom_changed", () => {
@@ -147,7 +148,6 @@ export class SearchMapComponent implements OnInit {
   }
   drop(): void {
     this.clearMarkers();
-  
     for (let i = 0; i < this.crashsites.length; i++) {
       this.addMarkerWithTimeout(this.crashsites[i].position, i * 200);
     }
@@ -173,34 +173,64 @@ export class SearchMapComponent implements OnInit {
           this.markers[i].map = null
         }
         this.markers = [];
+       this.infowindow?.close()
+   
   }
-  putMarkers(rectangle: google.maps.Rectangle) {
-    {
+  processMarkers(){
+    this.getAccidentsWithinRectangle() 
+  }
+
+  getContentInfo(){
+    let startDate:Date = this.crashsites.reduce((min, site) => 
+        (site.accidentDate < min? site.accidentDate : min), this.crashsites[0]?.accidentDate);
+    let EndDate:Date =this.crashsites.reduce((max, site) => 
+        (site.accidentDate > max ? site.accidentDate : max), this.crashsites[0]?.accidentDate);;
+    let totalEstimatedCost=this.crashsites.reduce((total, site) => 
+        total + site.estimatedCost, 0);
+    var datePipe = new DatePipe('en-US');
+      
+      return (
+          `<h3 class="font-bold bg-gray-500 text-white ">&nbsp;Coverage Information</h3>
+          <p class="font-semibold ...">
+                Accident Count:  ${this.crashsites.length} </p>
+            <p class="font-semibold ...">Period: 
+                ${ datePipe.transform(startDate,"yyyy-MM-dd")} to ${datePipe.transform(EndDate,"yyyy-MM-dd")}  </p>
+            <p class="font-semibold ...">Total Estimated Damage: 
+                ${(new CurrencyPipe('en-US')).transform(totalEstimatedCost, '')} </p>`
+      )
+    }
+
+    
+  putMarkers() {
+  
       const carImg = document.createElement('img');
       carImg.src = '/assets/images/crash.png';
       this.clearMarkers()
-      const isBetween= (num1: any, num2: any, value: any) => value >= num1 && value <= num2;
-      
-     //console.log(rectangle.getBounds()?.toJSON());
 
       for (const crashsite of this.crashsites) {
-       // console.log(isBetween(rectangle.getBounds()?.toJSON().south, rectangle.getBounds()?.toJSON().north, crashsite.position.lat))
-      //  console.log(isBetween(rectangle.getBounds()?.toJSON().west, rectangle.getBounds()?.toJSON().east, crashsite.position.lng));
-      let valid = isBetween(rectangle.getBounds()?.toJSON().south, rectangle.getBounds()?.toJSON().north, crashsite.position.lat) &&
-                  isBetween(rectangle.getBounds()?.toJSON().west,  rectangle.getBounds()?.toJSON().east, crashsite.position.lng)
-         if (valid) 
-          {        
-            const AdvancedMarkerElement = this.createMarker(crashsite.position, crashsite)
-           
+            const AdvancedMarkerElement = this.createMarker(crashsite.position, crashsite)    
             this.markers.push(AdvancedMarkerElement)
-          }
 
       }
+
+      let MapEdge:google.maps.LatLngLiteral =   {
+        lat: this.rectangle.getBounds()?.toJSON().north!,
+        lng:this.rectangle.getBounds()?.toJSON().west!
+      }
+        
+ 
+
+      this.infowindow?.close()     
+      this.infowindow = new google.maps.InfoWindow({
+            content: this.getContentInfo(),
+            position:MapEdge
+        });  
+        this.infowindow.open(this.map);
      
     }
-  }
- 
-  createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, content?:any): google.maps.marker.AdvancedMarkerElement {
+  
+
+  createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral,   content?:any): google.maps.marker.AdvancedMarkerElement {
     const carImg = document.createElement('img');
     carImg.src = '/assets/images/crash.png';
     carImg.width=23;
@@ -212,8 +242,12 @@ export class SearchMapComponent implements OnInit {
       map: this.map,
       title: 'markers',
       content: content!=null? carImg : thecontent ,
+
     });
-   // marker.content?.parentElement?.classList.add("bounce")
+    marker.addListener('click', () => {
+      this.openMapDialog(position.lat,position.lng)
+        });
+   marker.gmpClickable=true;
    return marker
  
   }
@@ -229,29 +263,49 @@ export class SearchMapComponent implements OnInit {
       `;
     return content;
   }
-  getAccidents(){
-    this.crashservice.getAccidents().subscribe(
-        (res)=>{
+  getAccidentsWithinRectangle(){ 
+    this.crashsites=[];
+    this.crashservice.getAccidentsWithinRectangle(
+          this.rectangle.getBounds()?.toJSON().north,
+          this.rectangle.getBounds()?.toJSON().south,
+          this.rectangle.getBounds()?.toJSON().east,
+          this.rectangle.getBounds()?.toJSON().west,
+      ).subscribe(
+      (res)=>{
 
-          const dataArray: any[] = Array.isArray(res) ? res : [res]; 
-          dataArray.forEach(element => {
-              this.crashsites.push(
-                {
-                  address: element.location,
-                  description: '',
-                  position: {
-                    lat: element.latitude,
-                    lng: element.longitude 
-                  }
-               });
-           
-           
-            });
-            
-        }
+        const dataArray: any[] = Array.isArray(res) ? res : [res]; 
+        dataArray.forEach(element => {
+            this.crashsites.push(
+              {
+                address: element.location,
+                description: '',
+                position: {
+                  lat: element.latitude,
+                  lng: element.longitude 
+                },
+                accidentDate: element.accidentDate,
+                estimatedCost: element.estimatedCost
+             });
+         
+         
+          });
+        this.putMarkers()
+      }
 
-    )
-  
+  )
   }
+  openMapDialog(_mlat:any, m_lng:any): void {
+    const dialogRef = this.dialog.open(MapDialogComponent, {
+      width: '600px', 
+      height: '400px', 
+      data: {
+        lat: _mlat,
+        lng: m_lng
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('Map dialog closed');
+    });
+  }
 }

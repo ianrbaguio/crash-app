@@ -8,6 +8,7 @@ using Crash.Models.Dtos;
 using Crash.Repositories.IRepositories;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Collections.Generic;
 
 namespace Crash.Repositories
 {
@@ -83,7 +84,17 @@ namespace Crash.Repositories
         {
             return await _dbContext.accident.ToListAsync();
         }
+        public Task<List<Accident>> GetAccidentListByRegionAsync(double North, double South, double East, double West)
 
+        {
+            var accidents = _dbContext.accident.Where(a =>
+                    (a.Latitude>= South && a.Latitude<=North) &&
+                    (a.Longitude>=West && a.Longitude<=East)).ToListAsync();
+
+            return accidents;
+
+        }
+ 
         public async Task<int> UpdateAccidentAsync(Accident accident)
         {
             _dbContext.accident.Update(accident);

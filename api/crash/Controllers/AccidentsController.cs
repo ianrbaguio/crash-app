@@ -4,6 +4,7 @@ using Crash.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
 
 namespace Crash.Controllers
 {
@@ -18,14 +19,31 @@ namespace Crash.Controllers
          _mediatr = meaditr;
       }
 
-      [HttpGet]
+      [HttpGet(Name = "GetAccidents")]
       public async Task<List<AccidentDto>> GetAccidentsAsync()
       {
          var accidents = await _mediatr.Send(new GetAccidentsQuery());
 
          return accidents;
       }
+      [HttpGet("ByRegion", Name = "GetAccidentsByRegion")]
+      public async Task<List<AccidentDto>> GetAccidentsByRegionAsync(
+            [FromQuery] double north,
+            [FromQuery] double south,
+            [FromQuery] double east,
+            [FromQuery] double west)
+        {
+            var accidents = await _mediatr.Send(new GetAccidentsByRegionQuery()
+            {
+                North = north,
+                South = south,
+                East = east,
+                West = west
 
+            });
+
+            return accidents;
+          }
         [HttpPost]
         public async Task<AccidentDto> AddAccidentAsync([FromBody] AccidentDto accident)
         {
@@ -50,8 +68,6 @@ namespace Crash.Controllers
         [HttpPost("uploadImages")]
         public async Task<IActionResult> UploadImages([FromForm] ImageDto image)
         {
-
-
             try
             {
 

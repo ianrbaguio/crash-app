@@ -4,3 +4,4 @@ bin/*
 obj/*
 bin/Debug/*
 obj/Debug/*
+Migrations/*

@@ -7,6 +7,7 @@ namespace Crash.Repositories.IRepositories
     {
 
         public Task<List<Accident>> GetAccidentListAsync();
+        public Task<List<Accident>> GetAccidentListByRegionAsync(double North, double South, double East, double West);
         public Task<Accident?> GetAccidentByIdAsync(Guid Id);
         public Task<Accident> AddAccidentAsync(Accident accident);
 
