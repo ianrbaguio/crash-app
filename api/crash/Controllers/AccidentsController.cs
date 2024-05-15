@@ -26,7 +26,7 @@ namespace Crash.Controllers
 
          return accidents;
       }
-<<<<<<< HEAD
+ 
       [HttpGet("ByRegion", Name = "GetAccidentsByRegion")]
       public async Task<List<AccidentDto>> GetAccidentsByRegionAsync(
             [FromQuery] double north,
@@ -45,9 +45,7 @@ namespace Crash.Controllers
 
             return accidents;
           }
-=======
-
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
+ 
         [HttpPost]
         public async Task<AccidentDto> AddAccidentAsync([FromBody] AccidentDto accident)
         {
@@ -72,11 +70,7 @@ namespace Crash.Controllers
         [HttpPost("uploadImages")]
         public async Task<IActionResult> UploadImages([FromForm] ImageDto image)
         {
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
+ 
             try
             {
 

@@ -1,22 +1,15 @@
 
 
 import { Component, OnInit, } from '@angular/core';
-<<<<<<< HEAD
 import { GoogleMapsModule} from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
-=======
-import { GoogleMapsModule } from '@angular/google-maps';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule } from '@angular/common';
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from '../../../environments/environment';
 import { CrashService } from '../../crash.service';
-<<<<<<< HEAD
 import {MapDialogComponent} from '../view-map-detail/mapdialog.component'
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,10 +21,6 @@ interface IAccident {
   accidentDate: Date,
   estimatedCost: number
 }
-=======
-
-
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 
 @Component({
   selector: 'crash-map-accident',
@@ -43,38 +32,18 @@ interface IAccident {
   styleUrl: './search-map.component.scss',
 })
 
-<<<<<<< HEAD
 export class SearchMapComponent  implements OnInit {
 
-=======
-
-export class SearchMapComponent implements OnInit {
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
   markers: google.maps.marker.AdvancedMarkerElement[] = [];
   public map!: any;
   center: google.maps.LatLngLiteral = {
     lat: 53.540235028,
     lng: -113.49818175
   };
-<<<<<<< HEAD
  rectangle!: google.maps.Rectangle
  crashsites: IAccident[]  = []
   
  constructor(private crashservice:CrashService,private dialog: MatDialog ) { }
-=======
-
-  crashsites = [{
-    address: 'NW Edmonton',
-    description: 'Incident 03/21/2024',
-    position: {
-      lat: 53.550235028,
-      lng: -113.58818175,
-    }
-  }]
-  
-
-  constructor(private crashservice:CrashService) { }
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 
   loadAPIMapscript() {
 
@@ -96,19 +65,11 @@ export class SearchMapComponent implements OnInit {
       });
 
   }
-<<<<<<< HEAD
   infowindow! : google.maps.InfoWindow ; 
-=======
-
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
   ngOnInit() {
     // use googlemaps/js-api-loader to dynamically load google scripts, this is needed so that
     // we dont need to use google script url with exposed hardcoded API_Key in index.html
     this.loadAPIMapscript();
-<<<<<<< HEAD
-=======
-    this.getAccidents();
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
   }
 
   async initMap() {
@@ -127,10 +88,7 @@ export class SearchMapComponent implements OnInit {
 
       this.map = map 
       const rectangle = this.defineMapRectangle();
-<<<<<<< HEAD
       this.rectangle= rectangle;
-=======
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
       this.defineDocumentElements(rectangle)
     }
     catch (e) { }
@@ -171,11 +129,7 @@ export class SearchMapComponent implements OnInit {
       .addEventListener("click", (event) => this.clearMarkers());
     document
       .getElementById("put-markers")!
-<<<<<<< HEAD
       .addEventListener("click", (event) =>  this.processMarkers() 
-=======
-      .addEventListener("click", (event) =>  this.putMarkers(rectangle)
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
       );
 
       this.map.addListener("zoom_changed", () => {
@@ -194,10 +148,6 @@ export class SearchMapComponent implements OnInit {
   }
   drop(): void {
     this.clearMarkers();
-<<<<<<< HEAD
-=======
-  
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
     for (let i = 0; i < this.crashsites.length; i++) {
       this.addMarkerWithTimeout(this.crashsites[i].position, i * 200);
     }
@@ -223,7 +173,6 @@ export class SearchMapComponent implements OnInit {
           this.markers[i].map = null
         }
         this.markers = [];
-<<<<<<< HEAD
        this.infowindow?.close()
    
   }
@@ -282,36 +231,6 @@ export class SearchMapComponent implements OnInit {
   
 
   createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral,   content?:any): google.maps.marker.AdvancedMarkerElement {
-=======
-  }
-  putMarkers(rectangle: google.maps.Rectangle) {
-    {
-      const carImg = document.createElement('img');
-      carImg.src = '/assets/images/crash.png';
-      this.clearMarkers()
-      const isBetween= (num1: any, num2: any, value: any) => value >= num1 && value <= num2;
-      
-     //console.log(rectangle.getBounds()?.toJSON());
-
-      for (const crashsite of this.crashsites) {
-       // console.log(isBetween(rectangle.getBounds()?.toJSON().south, rectangle.getBounds()?.toJSON().north, crashsite.position.lat))
-      //  console.log(isBetween(rectangle.getBounds()?.toJSON().west, rectangle.getBounds()?.toJSON().east, crashsite.position.lng));
-      let valid = isBetween(rectangle.getBounds()?.toJSON().south, rectangle.getBounds()?.toJSON().north, crashsite.position.lat) &&
-                  isBetween(rectangle.getBounds()?.toJSON().west,  rectangle.getBounds()?.toJSON().east, crashsite.position.lng)
-         if (valid) 
-          {        
-            const AdvancedMarkerElement = this.createMarker(crashsite.position, crashsite)
-           
-            this.markers.push(AdvancedMarkerElement)
-          }
-
-      }
-     
-    }
-  }
- 
-  createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, content?:any): google.maps.marker.AdvancedMarkerElement {
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
     const carImg = document.createElement('img');
     carImg.src = '/assets/images/crash.png';
     carImg.width=23;
@@ -323,17 +242,12 @@ export class SearchMapComponent implements OnInit {
       map: this.map,
       title: 'markers',
       content: content!=null? carImg : thecontent ,
-<<<<<<< HEAD
 
     });
     marker.addListener('click', () => {
       this.openMapDialog(position.lat,position.lng)
         });
    marker.gmpClickable=true;
-=======
-    });
-   // marker.content?.parentElement?.classList.add("bounce")
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
    return marker
  
   }
@@ -349,7 +263,6 @@ export class SearchMapComponent implements OnInit {
       `;
     return content;
   }
-<<<<<<< HEAD
   getAccidentsWithinRectangle(){ 
     this.crashsites=[];
     this.crashservice.getAccidentsWithinRectangle(
@@ -395,31 +308,4 @@ export class SearchMapComponent implements OnInit {
       console.log('Map dialog closed');
     });
   }
-=======
-  getAccidents(){
-    this.crashservice.getAccidents().subscribe(
-        (res)=>{
-
-          const dataArray: any[] = Array.isArray(res) ? res : [res]; 
-          dataArray.forEach(element => {
-              this.crashsites.push(
-                {
-                  address: element.location,
-                  description: '',
-                  position: {
-                    lat: element.latitude,
-                    lng: element.longitude 
-                  }
-               });
-           
-           
-            });
-            
-        }
-
-    )
-  
-  }
-
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 }

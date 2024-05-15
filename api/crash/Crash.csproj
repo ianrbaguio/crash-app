@@ -9,21 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Remove="Migrations\**" />
-    <Content Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Handlers\Query\GetAccidentsByRegionQueryHandler.cs" />
-    <Compile Remove="Models\Dtos\RectangleDto.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-=======
->>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.2.0" />
