@@ -30,6 +30,7 @@ getNearbyPlaces(latitude: number, longitude: number)  {
       return this.http.get(environment.PLACES_Endpoint,{params: queryParams,responseType : 'json'});
   }
 
+<<<<<<< HEAD
   getWeather(latitude: number, longitude: number, radius: number): any{ 
       return this.http.get(`${environment.WEATHER_Endpoint}&lat=${latitude}&lon=${longitude}&appid=${environment.WEATHER_API_KEY}`);
     }
@@ -49,5 +50,18 @@ getNearbyPlaces(latitude: number, longitude: number)  {
 
 
 }
+=======
+addAccident(requestBody: any){
+    return this.http.post(`${environment.Crash_API_Endpoint}/api/Accidents`,requestBody);
+}
+uploadImages( images: FormData, accidentId:any){
+    return this.http.post(`${environment.Crash_API_Endpoint}/api/accidents/uploadimages`,images);
+}
+getAccidents(){
+    return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents`)
+}
+
+}
+>>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 
 

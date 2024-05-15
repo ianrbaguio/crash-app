@@ -6,8 +6,13 @@ using AutoMapper;
 
 namespace Crash.Query.Handlers
 {
+<<<<<<< HEAD
    public class GetAccidentsQueryHandler : IRequestHandler<GetAccidentsQuery, List<AccidentDto>> , IRequestHandler<GetAccidentsByRegionQuery, List<AccidentDto>>
     {
+=======
+   public class GetAccidentsQueryHandler : IRequestHandler<GetAccidentsQuery, List<AccidentDto>>
+   {
+>>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
         private readonly IAccidentRepository _accidentRepository;
         private readonly IMapper _mapper;
         public GetAccidentsQueryHandler(IMapper mapper, IAccidentRepository accidentRepository)
@@ -37,6 +42,7 @@ namespace Crash.Query.Handlers
          data.Add(accident1);
          data.Add(accident2);
 
+<<<<<<< HEAD
          var accidents = await _accidentRepository.GetAccidentListAsync();
          return _mapper.Map<List<AccidentDto>>(accidents);
         }
@@ -52,4 +58,11 @@ namespace Crash.Query.Handlers
             return _mapper.Map<List<AccidentDto>>(accidents);
         }
     }
+=======
+            var accidents = await _accidentRepository.GetAccidentListAsync();
+
+            return _mapper.Map<List<AccidentDto>>(accidents);
+        }
+   }
+>>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 }

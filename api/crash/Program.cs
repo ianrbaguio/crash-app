@@ -39,7 +39,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
   
 }
+<<<<<<< HEAD
 app.UseDeveloperExceptionPage();
+=======
+>>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
 app.UseCors("AllowOrigin");
 app.UseHttpsRedirection();
 app.UseAuthorization();

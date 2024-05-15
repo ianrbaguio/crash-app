@@ -176,7 +176,26 @@ onSubmit(): void{
         longitude: this.longitude,
         parties: this.dynamicParties.value
       }; 
+<<<<<<< HEAD
    
+=======
+    /*   const requestBody = new FormData()    
+        requestBody.append('id','3fa85f64-5717-4562-b3fc-2c963f66afa6' );  
+        requestBody.append('accidentId', '0');
+        requestBody.append('location', this.form.controls["Location"].value);
+        requestBody.append('accidentDate',this.form.controls["DateIncident"].value);
+        requestBody.append('daylight', day.substring(day.lastIndexOf(' ')+1));
+        requestBody.append('weather', this.form.controls["WeatherConditions"].value);
+        requestBody.append('estimatedCost', this.form.controls["EstimateCost"].value);
+        requestBody.append('numberOfParties', this.dynamicParties.length.toString());
+        requestBody.append('latitude', this.latitude);
+        requestBody.append('longitude', this.longitude);
+        requestBody.append('parties', this.dynamicParties.value);
+        this.getImages().forEach(element => {
+          requestBody.append('Images',element );
+        });  
+        console.log(requestBody) */
+>>>>>>> b37bd723427a12c3ee36a1b9457cea2e3b700c5d
       
       this.crashservice.addAccident(requestBody)
       .subscribe(
