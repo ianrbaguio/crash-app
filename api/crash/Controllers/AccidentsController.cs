@@ -89,5 +89,20 @@ namespace Crash.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading images.");
             }
         }
+
+    [HttpGet("ById", Name = "GetAccidentById")]
+      public async Task<AccidentDto> GetAccidentByIdAsync([FromQuery] Guid id)
+      {
+         var accident = await _mediatr.Send(new GetAccidentByIdQuery() {Id = id});
+
+         return accident;
+      }
+
+      [HttpGet("images", Name = "GetImagtesByAccidentId")]
+      public async Task<AccidentImageDto> GetImagtesByAccidentIdAsync([FromQuery] Guid accidentId)
+      {
+        AccidentImageDto imageDto = await _mediatr.Send(new GetImagesByAccidentIdQuery() {AccidentId = accidentId});        
+         return imageDto;
+      }
     }
 }

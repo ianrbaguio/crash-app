@@ -7,7 +7,7 @@ using AutoMapper;
 namespace Crash.Query.Handlers
 {
  
-   public class GetAccidentsQueryHandler : IRequestHandler<GetAccidentsQuery, List<AccidentDto>> , IRequestHandler<GetAccidentsByRegionQuery, List<AccidentDto>>
+   public class GetAccidentsQueryHandler : IRequestHandler<GetAccidentsQuery, List<AccidentDto>> , IRequestHandler<GetAccidentsByRegionQuery, List<AccidentDto>>,  IRequestHandler<GetAccidentByIdQuery, AccidentDto>
     {
  
  
@@ -54,6 +54,16 @@ namespace Crash.Query.Handlers
             var accidents = await _accidentRepository.GetAccidentListByRegionAsync(query.North, query.South, query.East, query.West);
 
             return _mapper.Map<List<AccidentDto>>(accidents);
+        }
+
+        public async Task<AccidentDto> Handle(GetAccidentByIdQuery query, CancellationToken cancellationToken)
+
+        {
+            List<AccidentDto> data = new List<AccidentDto>();
+
+            var accidents = await _accidentRepository.GetAccidentByIdAsync(query.Id);
+
+            return _mapper.Map<AccidentDto>(accidents);
         }
     }
  

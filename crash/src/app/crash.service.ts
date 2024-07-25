@@ -46,7 +46,13 @@ getNearbyPlaces(latitude: number, longitude: number)  {
   getAccidentsWithinRectangle(north:any, south:any, east:any, west:any){
     return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents/byRegion?north=${north}&south=${south}&east=${east}&west=${west}`)
   }
+  getAccidentsById(id:any){
+    return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents/byId?id=${id}`)
+  }
 
+  getImagesByAccidentsId(accidentid:any){
+    return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents/images?accidentid=${accidentid}`)
+  }
 
 }
 

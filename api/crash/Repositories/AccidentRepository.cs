@@ -104,5 +104,13 @@ namespace Crash.Repositories
             _dbContext.accident.Update(accident);
             return await _dbContext.SaveChangesAsync();
         }
+
+        public Task<List<Image>> GetImagesByAccidentIdAsync(Guid accidentId){
+
+            var images = _dbContext.image.Where(a =>
+                    (a.AccidentId== accidentId )).ToListAsync();
+            return images;
+
+        }
     }
 }
