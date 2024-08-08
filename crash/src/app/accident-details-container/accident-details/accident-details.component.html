@@ -1,0 +1,86 @@
+<!-- <p>accident-details works!</p> -->
+
+<div id="info" class="flex justify-center ...">
+    <div >
+      <h2 class="pb-2">View Accident</h2>
+      <!-- <<p class="text-red-500 text-xs italic">Accident Report</p>  -->
+      <form [formGroup]="form">
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="DateIncident" >Date of Incident</label>
+            <div>
+                <input readonly id="accidentdate" type="text" formControlName="DateIncident" >
+            </div>            
+          </div>  
+          <div class="w-full md:w-1/2 px-3">
+            <mat-label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="incidenttime">Time of Incident</mat-label>
+             <input readonly id="incidenttime" type="text" formControlName="TimeIncident" >
+          </div>  
+        </div>
+        <div class="form-group">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Location">Location of Incident: </label>
+            <input type="text"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="location" formControlName="Location" readonly>  
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="longitude" >Longitude</label>
+              <div>
+                  <input readonly id="longitude" type="text" formControlName="Longitude" >
+              </div>            
+            </div>  
+            <div class="w-full md:w-1/2 px-3">
+              <mat-label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="latitude">Latitude</mat-label>
+               <input readonly id="latitude" type="text" formControlName="Latitude">
+            </div>  
+          </div>          
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="weatherconditions">Weather Conditions</label>
+            <input type="text"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="weatherconditions" formControlName="WeatherConditions" >      
+          </div>
+
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="weatherconditions">Daylight</label>
+            <input type="text"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="daylight" formControlName="Daylight" >      
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Cost">  Estimated Cost    </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="EstimateCost" type="text"  formControlName="EstimateCost"   >
+            </div>  
+            
+            <div class="form-group">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">Number of Parties Involved</label>
+                <input type="text"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="numberparties" formControlName="NumPartiesInvolved" >      
+              </div>
+              <div>
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="party">Party</label>
+                <div *ngFor="let party of partieslist" class="form-group">
+                  <input type="text"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="party" value={{party}} >      
+              </div>  
+            </div>           
+        </div>
+
+        <h2 class="pb-2">Accident Images</h2>
+         <!--  <ng-image-slider #nav [images]='imagesa' [infinite]="false" [autoSlide]="1"
+          [imageSize]="{width: '33%', height: 200}" slideImage="1"></ng-image-slider>-->
+        <div *ngFor="let image1 of imagengx">
+          <img [src] = image1>
+        </div>
+
+      </form>
+      
+    </div>      
+  </div>
