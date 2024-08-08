@@ -33,7 +33,7 @@ namespace Crash.Query.Handlers
                 //images.ForEach ()
                 aImageDto.ImageList = imglist;
              }   
-            System.Console.WriteLine ("GetImagesQueryHandler.handle return count..."  + imglist.Count);
+            //System.Console.WriteLine ("GetImagesQueryHandler.handle return count..."  + imglist.Count);
            
             return aImageDto;
         }
