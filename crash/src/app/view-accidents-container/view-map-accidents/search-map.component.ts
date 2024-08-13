@@ -3,7 +3,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { GoogleMapsModule} from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -42,7 +42,7 @@ export class SearchMapComponent  implements OnInit {
   };
  rectangle!: google.maps.Rectangle
  crashsites: IAccident[]  = []
-  
+ rectangleArea!: any
  constructor(private crashservice:CrashService,private dialog: MatDialog ) { }
 
   loadAPIMapscript() {
@@ -89,11 +89,34 @@ export class SearchMapComponent  implements OnInit {
       this.map = map 
       const rectangle = this.defineMapRectangle();
       this.rectangle= rectangle;
-      this.defineDocumentElements(rectangle)
+      this.defineDocumentElements(rectangle);
     }
     catch (e) { }
 
   }
+
+
+  haversine(lat1: any, lon1: any, lat2: any, lon2: any): number {
+    const toRadians = (degrees: number) => degrees * Math.PI / 180;
+    let R = 6371;
+    const dlat = toRadians(lat2 - lat1);
+    const dlon = toRadians(lon2 - lon1);
+
+    const a = Math.sin(dlat / 2) ** 2 + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dlon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return  R * c;
+  }
+
+
+  private calculateArea(north: any, south: any, east: any, west: any): number {
+    const length = this.haversine(north, west, south, west);
+    const averageLat = (north + south) / 2;
+    const width = this.haversine(averageLat, west, averageLat, east);
+
+    return length * width;
+  }
+
   private defineMapRectangle(): google.maps.Rectangle {
     //let map: any = this.map;
     const bounds = {
@@ -111,7 +134,7 @@ export class SearchMapComponent  implements OnInit {
       editable: true,
       draggable: true,
     });
-
+   
     rectangle.setMap(this.map);
 
     // listen to changes
@@ -145,6 +168,9 @@ export class SearchMapComponent  implements OnInit {
         });
       });
   
+
+    
+
   }
   drop(): void {
     this.clearMarkers();
@@ -187,6 +213,14 @@ export class SearchMapComponent  implements OnInit {
         (site.accidentDate > max ? site.accidentDate : max), this.crashsites[0]?.accidentDate);;
     let totalEstimatedCost=this.crashsites.reduce((total, site) => 
         total + site.estimatedCost, 0);
+    let incidence=this.crashsites.length/this.rectangleArea 
+    let rating: string = incidence<0.5?
+           '<span style="background-color:MediumSeaGreen;">Low incidence </span>':   
+           incidence<1?
+            '<span style="background-color:yellow;" >Average incidence </span>'  :
+            '<span style="background-color:red;"><img src="https://media.tenor.com/Ph2cKlohzRIAAAAi/health-warning.gif" style="width:50px;height:50px;">High incidence </span>'  
+
+   // let areaCovered: number = this.crashsites.reduce()
     var datePipe = new DatePipe('en-US');
       
       return (
@@ -196,7 +230,14 @@ export class SearchMapComponent  implements OnInit {
             <p class="font-semibold ...">Period: 
                 ${ datePipe.transform(startDate,"yyyy-MM-dd")} to ${datePipe.transform(EndDate,"yyyy-MM-dd")}  </p>
             <p class="font-semibold ...">Total Estimated Damage: 
-                ${(new CurrencyPipe('en-US')).transform(totalEstimatedCost, '')} </p>`
+                ${(new CurrencyPipe('en-US')).transform(totalEstimatedCost, '')} </p>
+            <p class="font-semibold ...">Area Covered(SqKm): 
+                ${(new DecimalPipe('en-US')).transform(this.rectangleArea, '1.2-2')} </p>
+            <p class="font-semibold ...">Incident Occurence(per SqKm): 
+                ${(new DecimalPipe('en-US')).transform(this.crashsites.length/this.rectangleArea, '1.2-2')} </p>      
+            <p class="font-semibold ...">Rating:    ${rating} </p>
+                
+             `
       )
     }
 
@@ -265,6 +306,14 @@ export class SearchMapComponent  implements OnInit {
   }
   getAccidentsWithinRectangle(){ 
     this.crashsites=[];
+    this.rectangleArea = this.calculateArea(
+      this.rectangle.getBounds()?.toJSON().north,
+      this.rectangle.getBounds()?.toJSON().south,
+      this.rectangle.getBounds()?.toJSON().east,
+      this.rectangle.getBounds()?.toJSON().west,
+     );
+
+       console.log( this.rectangle.getBounds()?.toJSON)
     this.crashservice.getAccidentsWithinRectangle(
           this.rectangle.getBounds()?.toJSON().north,
           this.rectangle.getBounds()?.toJSON().south,

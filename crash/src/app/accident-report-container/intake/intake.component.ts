@@ -1,5 +1,5 @@
 
-import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren} from '@angular/core';
+import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject, AfterViewInit} from '@angular/core';
 import { CommonModule, DatePipe} from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder,FormGroup,FormControl, ReactiveFormsModule ,Validators, FormArray} from '@angular/forms';
@@ -13,22 +13,45 @@ import {BreakpointObserver } from '@angular/cdk/layout';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CrashService} from '../../crash.service';
 import { catchError, map } from 'rxjs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { PartydialogComponent } from '../partydialog/partydialog.component';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
+export interface IPartyDetails {
+  PartyLastName: any,
+  PartyFirstName:  any,
+  PartyAddress  :  any,
+  PartyPhone: any,
+  PartyLicense:  any,
+  PartyRemarks: any 
+} 
+
 @Component({
   selector: 'crash-intake',
   standalone: true,
   providers: [provideNativeDateAdapter(), DatePipe],
   imports: [CommonModule, RouterOutlet,  ReactiveFormsModule,
-    MatFormFieldModule,MatDatepickerModule, 
-    NgxMatTimepickerModule , MapComponent, UploadComponent
+    MatFormFieldModule,MatDatepickerModule, MatExpansionModule,
+    NgxMatTimepickerModule , MapComponent, UploadComponent,MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent
   ],
   templateUrl: './intake.component.html',
   styleUrl: './intake.component.scss'
 })
 
 
-export class IntakeComponent  implements OnInit  {
-  @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
 
+export class IntakeComponent  implements OnInit, AfterViewInit  {
+  @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
+  
   form : FormGroup = new FormGroup({
     DateIncident: new FormControl(new Date(),[Validators.required]),
     TimeIncident: new FormControl('',[Validators.required]),
@@ -40,8 +63,15 @@ export class IntakeComponent  implements OnInit  {
       
 });
 
+PartyDetails: IPartyDetails={ PartyLastName: 'Gonzales',
+      PartyFirstName:  'Mario',
+      PartyAddress  :  'Edmonton',
+      PartyPhone: '123456789',
+      PartyLicense:  'ABX',
+      PartyRemarks: 'Rtest' }
+ 
 PartyFieldsGenerated: boolean = false;
-PartyFields: {name: string, value: string }[] = [];
+PartyFields: {name: string, value: string, PartyDetails: IPartyDetails }[] = [];
 WeatherIcon:string =''
 Image1: any;
 Image2: any;
@@ -60,7 +90,8 @@ smallscreen: boolean =false;
         private cdf: ChangeDetectorRef, 
         private formBuilder: FormBuilder,
         private _snackBar: MatSnackBar, 
-        private crashservice : CrashService
+        private crashservice : CrashService,
+        private dialog: MatDialog
     ) {
       
   }
@@ -69,6 +100,7 @@ smallscreen: boolean =false;
 
 
 ngOnInit() {
+    
     this.setDefaultInputs();
     this.generatePartyFields();
  
@@ -94,17 +126,33 @@ generatePartyFields() {
   let numberOfInputs:number = 0;
    numberOfInputs=this.form.controls['NumPartiesInvolved'].value
    this.PartyFieldsGenerated = numberOfInputs>0;
- 
-   if  (numberOfInputs==1 && this.dynamicParties.length==0) 
-       this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+   if  (numberOfInputs==1 && this.dynamicParties.length==0) {
+     this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+     this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
+   }
+       
     else
       {
         const diff = numberOfInputs - this.dynamicParties.length     
         if (diff  > 0) {     
-           this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+              
+              this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+              this.PartyFields.push({name: '', value: '', PartyDetails: 
+                    {
+                      PartyLastName: '',
+                      PartyFirstName:  '',
+                      PartyAddress  :  '',
+                      PartyPhone: '',
+                      PartyLicense:  '',
+                      PartyRemarks: '' 
+                    }
+            })
+            
+          
        } else if (diff  < 0) {
          for (let i = 0; i < Math.abs(diff); i++) {
-              this.dynamicParties.removeAt(this.dynamicParties.length - 1);       
+              this.dynamicParties.removeAt(this.dynamicParties.length - 1);  
+              this.PartyFields.pop(); 
          }
       }
   }
@@ -158,6 +206,7 @@ get dynamicParties() {
 }
 
 onSubmit(): void{
+  console.log(this.PartyFields.length)
   if (this.form.invalid) {  
     return;
   }
@@ -228,4 +277,27 @@ uploadImages(accident_id: string): void {
           uc.clearImage();
     }); 
   }
+
+
+  openPartyDialog(i:number , m_data:any): void {
+
+    
+ if (this.PartyFields[i]?.PartyDetails==null)
+    this.PartyFields[i].PartyDetails=this.PartyDetails;
+    m_data=this.PartyFields[i].PartyDetails;  
+ 
+    const dialogRef = this.dialog.open(PartydialogComponent, {
+      width: '800px', 
+      height: '400px', 
+      data:  m_data
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+ 
+      this.PartyFields[i].PartyDetails=<IPartyDetails>result;
+     
+    });
+  }
+
+  
 }
