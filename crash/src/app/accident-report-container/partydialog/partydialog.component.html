@@ -20,7 +20,7 @@
         <div>
           <input name="PartyLastName" 
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            formControlName="PartyLastName"   >
+            formControlName="PartyLastName"    >
            
         </div>
         @if (form.controls['PartyLastName'].errors) {
@@ -33,9 +33,9 @@
             First Name
         </label>
         <div>
-          <input name="PartyFirstName" 
+          <input name="PartyFirstName"  
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            formControlName="PartyFirstName"   >
+            formControlName="PartyFirstName"      >
            
         </div>
         @if (form.controls['PartyFirstName'].errors) {
@@ -49,7 +49,7 @@
       <div>
         <input name="PartyAddress" 
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          formControlName="PartyAddress"  >
+          formControlName="PartyAddress"    >
          
       </div>
       @if (form.controls['PartyAddress'].errors) {
@@ -62,12 +62,12 @@
             Phone
         </label>
         <div>
-          <input name="Phone Number" 
+          <input name="PartyPhone" 
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            formControlName="Phone"  >
+            formControlName="PartyPhone"   >
            
         </div>
-        @if (form.controls['Phone'].errors) {
+        @if (form.controls['PartyPhone'].errors) {
             <span>* Required </span>         
               }
       </div>
@@ -92,24 +92,28 @@
             Remarks
         </label>
         <div>
-          <input name="Remarks" 
+          <input name="PartyRemarks" 
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            formControlName="Remarks"  >
+            formControlName="Remarks"   > 
            
         </div>
-        @if (form.controls['Remarks'].errors) {
+        @if (form.controls['PartyRemarks'].errors) {
             <span>* Required </span>         
               }
       </div>
 </div></div>
+
 </form>
 <div class="mt-6 flex items-center justify-end gap-x-6">
   
-  <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+ <!--  <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
   <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       (click)="onSubmit()"
-  >Save</button>
+  >Save</button> -->
 
 </div>
-
+<mat-dialog-actions>
+  <button mat-button class="text-sm font-semibold leading-6 text-gray-900" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"  cdkFocusInitial (click)="onSubmit()">Save</button>
+</mat-dialog-actions>
 </mat-dialog-content>
