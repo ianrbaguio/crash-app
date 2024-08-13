@@ -1,5 +1,5 @@
 
-import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject} from '@angular/core';
+import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject, AfterViewInit} from '@angular/core';
 import { CommonModule, DatePipe} from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder,FormGroup,FormControl, ReactiveFormsModule ,Validators, FormArray} from '@angular/forms';
@@ -49,7 +49,7 @@ export interface IPartyDetails {
 
 
 
-export class IntakeComponent  implements OnInit  {
+export class IntakeComponent  implements OnInit, AfterViewInit  {
   @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
   
   form : FormGroup = new FormGroup({
@@ -63,12 +63,12 @@ export class IntakeComponent  implements OnInit  {
       
 });
 
-PartyDetails: IPartyDetails={ PartyLastName: '',
-      PartyFirstName:  '',
-      PartyAddress  :  '',
-      PartyPhone: '',
-      PartyLicense:  '',
-      PartyRemarks: '' }
+PartyDetails: IPartyDetails={ PartyLastName: 'Gonzales',
+      PartyFirstName:  'Mario',
+      PartyAddress  :  'Edmonton',
+      PartyPhone: '123456789',
+      PartyLicense:  'ABX',
+      PartyRemarks: 'Rtest' }
  
 PartyFieldsGenerated: boolean = false;
 PartyFields: {name: string, value: string, PartyDetails: IPartyDetails }[] = [];
@@ -126,7 +126,6 @@ generatePartyFields() {
   let numberOfInputs:number = 0;
    numberOfInputs=this.form.controls['NumPartiesInvolved'].value
    this.PartyFieldsGenerated = numberOfInputs>0;
-  console.log(this.PartyDetails)
    if  (numberOfInputs==1 && this.dynamicParties.length==0) {
      this.dynamicParties.push(this.formBuilder.control('', Validators.required));
      this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
@@ -135,10 +134,20 @@ generatePartyFields() {
     else
       {
         const diff = numberOfInputs - this.dynamicParties.length     
-        if (diff  > 0) {     {
-          this.dynamicParties.push(this.formBuilder.control('', Validators.required));
-          this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
-        }
+        if (diff  > 0) {     
+              
+              this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+              this.PartyFields.push({name: '', value: '', PartyDetails: 
+                    {
+                      PartyLastName: '',
+                      PartyFirstName:  '',
+                      PartyAddress  :  '',
+                      PartyPhone: '',
+                      PartyLicense:  '',
+                      PartyRemarks: '' 
+                    }
+            })
+            
           
        } else if (diff  < 0) {
          for (let i = 0; i < Math.abs(diff); i++) {
@@ -276,17 +285,17 @@ uploadImages(accident_id: string): void {
  if (this.PartyFields[i]?.PartyDetails==null)
     this.PartyFields[i].PartyDetails=this.PartyDetails;
     m_data=this.PartyFields[i].PartyDetails;  
-    console.log(m_data);
+ 
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px', 
       height: '400px', 
-      data: {
-       PartyDetails : m_data
-      }
+      data:  m_data
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("result" + result)
+ 
+      this.PartyFields[i].PartyDetails=<IPartyDetails>result;
+     
     });
   }
 
