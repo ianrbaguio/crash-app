@@ -1,3 +1,5 @@
+
+
 namespace Crash.Models.Dtos
 {
    public class AccidentDto
@@ -14,7 +16,7 @@ namespace Crash.Models.Dtos
         public int NumberOfParties { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
-        public List<string> Parties { get; set; } = new List<string>();
+         
+        public List<PartyDto> Parties { get; set; }
     }
 }

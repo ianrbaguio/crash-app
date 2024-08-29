@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
+using static Crash.Commands.CreateAccident;
 
 namespace Crash.Controllers
 {
@@ -14,9 +15,9 @@ namespace Crash.Controllers
    {
       private readonly IMediator _mediatr;
 
-      public AccidentsController(IMediator meaditr)
+      public AccidentsController(IMediator mediatr)
       {
-         _mediatr = meaditr;
+         _mediatr = mediatr;
       }
 
       [HttpGet(Name = "GetAccidents")]
@@ -50,21 +51,8 @@ namespace Crash.Controllers
         public async Task<AccidentDto> AddAccidentAsync([FromBody] AccidentDto accident)
         {
 
-            var _accident = await _mediatr.Send(new CreateAccident()
-            {
-                Accident_id = accident.AccidentId,
-                Location = accident.Location,
-                Accident_date = accident.AccidentDate,
-                Daylight = accident.Daylight,
-                Weather = accident.Weather,
-                Estimated_cost = accident.EstimatedCost,
-                Number_of_parties = accident.NumberOfParties,
-                Latitude = accident.Latitude,
-                Longitude = accident.Longitude,
-                Parties = accident.Parties
-
-            }
-              );
+            var command = new CreateAccident { Accident = accident };
+            var _accident = await _mediatr.Send(command);
             return _accident;
         }
         [HttpPost("uploadImages")]
