@@ -35,7 +35,7 @@ getNearbyPlaces(latitude: number, longitude: number)  {
     }
 
   addAccident(requestBody: any){
-      return this.http.post(`${environment.Crash_API_Endpoint}/api/Accidents`,requestBody);
+      return this.http.post(`${environment.Crash_API_Endpoint}/api/Accidents`,requestBody, { responseType: 'text' } );
   }
   uploadImages( images: FormData, accidentId:any){
       return this.http.post(`${environment.Crash_API_Endpoint}/api/accidents/uploadimages`,images);

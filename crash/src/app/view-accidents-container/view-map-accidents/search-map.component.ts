@@ -196,7 +196,7 @@ export class SearchMapComponent  implements OnInit {
   clearMarkers(){    
         // Delete markers   
         for (let i = 0; i < this.markers.length; i++) {
-          this.markers[i].map = null
+          this.markers[i].map= null
         }
         this.markers = [];
        this.infowindow?.close()
@@ -313,7 +313,7 @@ export class SearchMapComponent  implements OnInit {
       this.rectangle.getBounds()?.toJSON().west,
      );
 
-       console.log( this.rectangle.getBounds()?.toJSON)
+
     this.crashservice.getAccidentsWithinRectangle(
           this.rectangle.getBounds()?.toJSON().north,
           this.rectangle.getBounds()?.toJSON().south,

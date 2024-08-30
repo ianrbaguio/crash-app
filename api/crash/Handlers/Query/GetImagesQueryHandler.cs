@@ -32,7 +32,14 @@ namespace Crash.Query.Handlers
                 }
                 //images.ForEach ()
                 aImageDto.ImageList = imglist;
-             }   
+             }
+            else
+            {
+                return new AccidentImageDto() {
+                    AccidentId = query.AccidentId,
+                    ImageList = imglist
+                };
+            }
             //System.Console.WriteLine ("GetImagesQueryHandler.handle return count..."  + imglist.Count);
            
             return aImageDto;

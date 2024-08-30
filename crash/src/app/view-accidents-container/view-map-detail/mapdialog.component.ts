@@ -41,11 +41,14 @@ export class MapDialogComponent implements OnInit {
     loader
       .importLibrary('maps').then(() => {
         this.initMap();
+       
       })
       .catch((e) => {
       });
     loader
-      .importLibrary('marker')
+      .importLibrary('marker').then(()=>{
+       
+      })
       .catch((e) => {
       });
 
@@ -55,7 +58,7 @@ export class MapDialogComponent implements OnInit {
     // use googlemaps/js-api-loader to dynamically load google scripts, this is needed so that
     // we dont need to use google script url with exposed hardcoded API_Key in index.html
     this.loadAPIMapscript();
-    this.drawMarker()
+   // this.drawMarker();
    
   }
   drawMarker(){

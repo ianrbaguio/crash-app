@@ -10,6 +10,9 @@ namespace Crash.Mapping
         public MappingProfile()
         {
             CreateMap<Accident, AccidentDto>();
+            CreateMap<PartyDto, Party>();
+            CreateMap<AccidentDto, Accident>();
+            CreateMap<Party, PartyDto>();
         }
     }
 }

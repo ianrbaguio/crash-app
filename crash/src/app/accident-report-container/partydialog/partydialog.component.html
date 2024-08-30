@@ -21,7 +21,7 @@
           <input name="PartyLastName" 
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             formControlName="PartyLastName"    >
-           
+     
         </div>
         @if (form.controls['PartyLastName'].errors) {
             <span>* Required </span>         
@@ -33,10 +33,11 @@
             First Name
         </label>
         <div>
+
           <input name="PartyFirstName"  
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             formControlName="PartyFirstName"      >
-           
+     
         </div>
         @if (form.controls['PartyFirstName'].errors) {
             <span>* Required </span>         
@@ -49,8 +50,9 @@
       <div>
         <input name="PartyAddress" 
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+
           formControlName="PartyAddress"    >
-         
+
       </div>
       @if (form.controls['PartyAddress'].errors) {
           <span>* Required </span>         
@@ -62,12 +64,14 @@
             Phone
         </label>
         <div>
+
           <input name="PartyPhone" 
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             formControlName="PartyPhone"   >
            
         </div>
         @if (form.controls['PartyPhone'].errors) {
+
             <span>* Required </span>         
               }
       </div>
@@ -98,10 +102,12 @@
            
         </div>
         @if (form.controls['PartyRemarks'].errors) {
+
             <span>* Required </span>         
               }
       </div>
 </div></div>
+
 
 </form>
 <div class="mt-6 flex items-center justify-end gap-x-6">
