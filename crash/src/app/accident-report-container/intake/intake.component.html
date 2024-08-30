@@ -65,15 +65,19 @@
               <div *ngIf="PartyFieldsGenerated">
                  <div formArrayName="dynamicParties">
                   <div *ngFor="let input of dynamicParties.controls; let i=index">
+<<<<<<< HEAD
               <!--       <mat-accordion [formControlName]="'mat-accordion'+i">
                       <mat-expansion-panel [formControlName]="'mat-panel'+i"> -->
 
  
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
                       Party {{i+1}}
                     </label>
                     <input type="text" [formControlName]="i" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                      <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold px-80 py-2 m-2"> 
+<<<<<<< HEAD
 <<<<<<< HEAD
                       <button [formControlName]="'d'+i"  (click)="this.openPartyDialog(i, this.PartyFields[i].PartyDetails)">Add Party Details</button>
                    </div>
@@ -84,6 +88,11 @@
                 <!--   </mat-expansion-panel>
                  </mat-accordion> -->
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+                      <button [formControlName]="'d'+i"  (click)="this.openPartyDialog(i, this.PartyFields[i].PartyDetails)">Add Party Details</button>
+                   </div>
+          
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
                   </div>
                 </div>
               </div>

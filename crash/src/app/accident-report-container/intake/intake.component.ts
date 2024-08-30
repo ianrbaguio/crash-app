@@ -1,9 +1,13 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject, AfterViewInit} from '@angular/core';
 =======
 import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject} from '@angular/core';
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject, AfterViewInit} from '@angular/core';
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 import { CommonModule, DatePipe} from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder,FormGroup,FormControl, ReactiveFormsModule ,Validators, FormArray} from '@angular/forms';
@@ -54,10 +58,14 @@ export interface IPartyDetails {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export class IntakeComponent  implements OnInit, AfterViewInit  {
 =======
 export class IntakeComponent  implements OnInit  {
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+export class IntakeComponent  implements OnInit, AfterViewInit  {
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
   @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
   
   form : FormGroup = new FormGroup({
@@ -72,12 +80,16 @@ export class IntakeComponent  implements OnInit  {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 PartyDetails: IPartyDetails={ PartyLastName: 'Gonzales',
       PartyFirstName:  'Mario',
       PartyAddress  :  'Edmonton',
       PartyPhone: '123456789',
       PartyLicense:  'ABX',
       PartyRemarks: 'Rtest' }
+<<<<<<< HEAD
 =======
 PartyDetails: IPartyDetails={ PartyLastName: '',
       PartyFirstName:  '',
@@ -86,6 +98,8 @@ PartyDetails: IPartyDetails={ PartyLastName: '',
       PartyLicense:  '',
       PartyRemarks: '' }
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
  
 PartyFieldsGenerated: boolean = false;
 PartyFields: {name: string, value: string, PartyDetails: IPartyDetails }[] = [];
@@ -144,9 +158,12 @@ generatePartyFields() {
    numberOfInputs=this.form.controls['NumPartiesInvolved'].value
    this.PartyFieldsGenerated = numberOfInputs>0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   console.log(this.PartyDetails)
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
    if  (numberOfInputs==1 && this.dynamicParties.length==0) {
      this.dynamicParties.push(this.formBuilder.control('', Validators.required));
      this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
@@ -156,6 +173,9 @@ generatePartyFields() {
       {
         const diff = numberOfInputs - this.dynamicParties.length     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
         if (diff  > 0) {     
               
               this.dynamicParties.push(this.formBuilder.control('', Validators.required));
@@ -170,12 +190,15 @@ generatePartyFields() {
                     }
             })
             
+<<<<<<< HEAD
 =======
         if (diff  > 0) {     {
           this.dynamicParties.push(this.formBuilder.control('', Validators.required));
           this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
         }
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
           
        } else if (diff  < 0) {
          for (let i = 0; i < Math.abs(diff); i++) {
@@ -341,6 +364,9 @@ uploadImages(accident_id: string): void {
     this.PartyFields[i].PartyDetails=this.PartyDetails;
     m_data=this.PartyFields[i].PartyDetails;  
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
  
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px', 
@@ -352,6 +378,7 @@ uploadImages(accident_id: string): void {
  
       this.PartyFields[i].PartyDetails=<IPartyDetails>result;
      
+<<<<<<< HEAD
 =======
     console.log(m_data);
     const dialogRef = this.dialog.open(PartydialogComponent, {
@@ -365,6 +392,8 @@ uploadImages(accident_id: string): void {
     dialogRef.afterClosed().subscribe((result) => {
       console.log("result" + result)
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
     });
   }
 

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators,  ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
@@ -8,6 +9,11 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder,FormControl, FormGroup, Validators,  ReactiveFormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule ,} from '@angular/material/input';
@@ -44,6 +50,7 @@ export interface IPartyDetails {
   styleUrl: './partydialog.component.scss' 
 })
 <<<<<<< HEAD
+<<<<<<< HEAD
 export class PartydialogComponent implements OnInit, AfterViewInit{
   form! : FormGroup; 
   result!:  IPartyDetails
@@ -52,12 +59,20 @@ export class PartydialogComponent implements OnInit{
   form! : FormGroup; 
 
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+export class PartydialogComponent implements OnInit, AfterViewInit{
+  form! : FormGroup; 
+  result!:  IPartyDetails
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 ngOnInit() {
   this.form = new FormGroup({
     PartyLastName: new FormControl('',[Validators.required]),
     PartyFirstName: new FormControl('',[Validators.required]),
     PartyAddress  : new FormControl('',[Validators.required]),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
     PartyPhone: new FormControl(''),
     PartyLicense: new FormControl('',[Validators.required]),
     PartyRemarks: new FormControl('',[Validators.required]) 
@@ -67,7 +82,11 @@ ngOnInit() {
 }
 onSubmit() {
 <<<<<<< HEAD
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 =======
 
 >>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
@@ -93,6 +112,10 @@ constructor( private formBuilder: FormBuilder,
 {
  
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 =======
 
 >>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
@@ -117,6 +140,7 @@ onNoClick(): void {
       
   this.dialogRef.close();
 
+<<<<<<< HEAD
 =======
     PartyPhone: new FormControl(),
     PartyLicense: new FormControl('',[Validators.required]),
@@ -138,6 +162,8 @@ constructor( private formBuilder: FormBuilder, private dialogRef: MatDialogRef<P
     onNoClick(): void {
       this.dialogRef.close();
 >>>>>>> 16ba6d3 (added visual features and interface of party details)
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
     }
     
 }

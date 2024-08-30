@@ -39,6 +39,13 @@
       "RelativeMoniker": "D:0:0:{629C0D02-5B1D-454F-91B0-4B1A0C29913B}|Crash.csproj|solutionrelative:models\\entities\\accident.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+=======
+      "AbsoluteMoniker": "D:0:0:{629C0D02-5B1D-454F-91B0-4B1A0C29913B}|Crash.csproj|c:\\users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{629C0D02-5B1D-454F-91B0-4B1A0C29913B}|Crash.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
       "AbsoluteMoniker": "D:0:0:{629C0D02-5B1D-454F-91B0-4B1A0C29913B}|Crash.csproj|c:\\users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{629C0D02-5B1D-454F-91B0-4B1A0C29913B}|Crash.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -118,9 +125,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 4,
           "Children": [
             {
+=======
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "AppDbContext.cs",
@@ -130,7 +147,12 @@
               "RelativeToolTip": "Database\\AppDbContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2024-04-17T20:55:57.2Z"
+=======
+              "WhenOpened": "2024-04-17T20:55:57.2Z",
+              "EditorCaption": ""
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
             },
             {
               "$type": "Document",
@@ -176,7 +198,11 @@
               "RelativeDocumentMoniker": "Repositories\\AccidentRepository.cs",
               "ToolTip": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Repositories\\AccidentRepository.cs",
               "RelativeToolTip": "Repositories\\AccidentRepository.cs",
+<<<<<<< HEAD
               "ViewState": "AQIAAEwAAAAAAAAAAADgv2AAAAANAAAA",
+=======
+              "ViewState": "AQIAAEsAAAAAAAAAAIAxwGAAAAANAAAA",
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-17T20:58:28.567Z",
               "EditorCaption": ""
@@ -191,7 +217,12 @@
               "RelativeToolTip": "Controllers\\AccidentsController.cs",
               "ViewState": "AQIAAE0AAAAAAAAAAADwv1sAAABIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2024-04-12T21:55:32.298Z"
+=======
+              "WhenOpened": "2024-04-12T21:55:32.298Z",
+              "EditorCaption": ""
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
             },
             {
               "$type": "Document",
@@ -219,7 +250,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 9,
+=======
+              "DocumentIndex": 10,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -231,6 +266,21 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+=======
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAABnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-17T20:43:27.186Z"
+            },
+            {
+              "$type": "Document",
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "DocumentIndex": 8,
               "Title": "Accident.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Models\\Entities\\Accident.cs",
@@ -243,7 +293,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 26,
+=======
+              "DocumentIndex": 27,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Repositories\\appsettings.json",
               "RelativeDocumentMoniker": "Repositories\\appsettings.json",
@@ -255,7 +309,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 11,
+=======
+              "DocumentIndex": 12,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "UploadImages.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Commands\\UploadImages.cs",
               "RelativeDocumentMoniker": "Commands\\UploadImages.cs",
@@ -267,7 +325,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 10,
+=======
+              "DocumentIndex": 11,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "GetAccidentsQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Handlers\\Query\\GetAccidentsQueryHandler.cs",
               "RelativeDocumentMoniker": "Handlers\\Query\\GetAccidentsQueryHandler.cs",
@@ -279,7 +341,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 12,
+=======
+              "DocumentIndex": 13,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "IAccidentRepository.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Repositories\\IRepositories\\IAccidentRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IRepositories\\IAccidentRepository.cs",
@@ -291,7 +357,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 13,
+=======
+              "DocumentIndex": 14,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "AccidentImageDto.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Models\\Dtos\\AccidentImageDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\AccidentImageDto.cs",
@@ -303,7 +373,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 14,
+=======
+              "DocumentIndex": 15,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "AccidentDto.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Models\\Dtos\\AccidentDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\AccidentDto.cs",
@@ -315,7 +389,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 16,
+=======
+              "DocumentIndex": 17,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "ListUsersQuery.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Queries\\ListUsersQuery.cs",
               "RelativeDocumentMoniker": "Queries\\ListUsersQuery.cs",
@@ -327,7 +405,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 15,
+=======
+              "DocumentIndex": 16,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "GetAccidentsByRegionQuery.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Queries\\GetAccidentsByRegionQuery.cs",
               "RelativeDocumentMoniker": "Queries\\GetAccidentsByRegionQuery.cs",
@@ -339,7 +421,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 17,
+=======
+              "DocumentIndex": 18,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "UploadImagesHandler.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Handlers\\Command\\UploadImagesHandler.cs",
               "RelativeDocumentMoniker": "Handlers\\Command\\UploadImagesHandler.cs",
@@ -351,7 +437,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 19,
+=======
+              "DocumentIndex": 20,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -363,7 +453,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 18,
+=======
+              "DocumentIndex": 19,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Misc\\MappingProfile.cs",
               "RelativeDocumentMoniker": "Misc\\MappingProfile.cs",
@@ -375,7 +469,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 20,
+=======
+              "DocumentIndex": 21,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "apicrashMigrations20240417203855_initial-accident-images-tables.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Migrations\\apicrashMigrations20240417203855_initial-accident-images-tables.cs",
               "RelativeDocumentMoniker": "Migrations\\apicrashMigrations20240417203855_initial-accident-images-tables.cs",
@@ -387,7 +485,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 21,
+=======
+              "DocumentIndex": 22,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "RequestResponseLoggingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Misc\\RequestResponseLoggingMiddleware.cs",
               "RelativeDocumentMoniker": "Misc\\RequestResponseLoggingMiddleware.cs",
@@ -399,7 +501,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 22,
+=======
+              "DocumentIndex": 23,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "GetImagesQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Handlers\\Query\\GetImagesQueryHandler.cs",
               "RelativeDocumentMoniker": "Handlers\\Query\\GetImagesQueryHandler.cs",
@@ -411,7 +517,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 24,
+=======
+              "DocumentIndex": 25,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "apicrashMigrations20240417203855_initial-accident-images-tables.Designer.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Migrations\\apicrashMigrations20240417203855_initial-accident-images-tables.Designer.cs",
               "RelativeDocumentMoniker": "Migrations\\apicrashMigrations20240417203855_initial-accident-images-tables.Designer.cs",
@@ -423,7 +533,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 25,
+=======
+              "DocumentIndex": 26,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "apicrashMigrationsAppDbContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Migrations\\apicrashMigrationsAppDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Migrations\\apicrashMigrationsAppDbContextModelSnapshot.cs",
@@ -435,7 +549,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 23,
+=======
+              "DocumentIndex": 24,
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\marionito.gonzales\\crash\\crash-app\\api\\crash\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -444,10 +562,13 @@
               "ViewState": "AQIAABMAAAAAAAAAAABhwBMAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-04-17T20:44:50.598Z"
+<<<<<<< HEAD
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+=======
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
             }
           ]
         }

@@ -314,7 +314,11 @@ export class SearchMapComponent  implements OnInit {
      );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
 =======
 
 >>>>>>> da2147aa27f359c6464a350796cd83857e82dcca
