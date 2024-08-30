@@ -206,14 +206,15 @@ get dynamicParties() {
 }
 
 onSubmit(): void{
-  console.log(this.PartyFields.length)
+
   if (this.form.invalid) {  
+    console.log("Form contains invalid data")
     return;
   }
   this.submitted = true;
     const day:string =   this.form.controls["TimeIncident"].value 
      const requestBody = {
-        id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+       // HARDCORDING PARTIES FOR TESTING ONLY
         accidentId: 0,
         location: this.form.controls["Location"].value,
         accidentDate:this.form.controls["DateIncident"].value,
@@ -223,18 +224,44 @@ onSubmit(): void{
         numberOfParties: 1,
         latitude: this.latitude,
         longitude: this.longitude,
-        parties: this.dynamicParties.value
+        parties: [ {
+          "license": "ABC123456",
+          "lastname": "Horton",
+          "firstname": "Tim",
+          "address": "1234 127 Ave Edmonton AB",
+          "phone" : "780123456",
+          "remarks": "none"
+        },
+     {
+          "license": "XYZ123456",
+          "lastname": "Horton",
+          "firstname": "Tim",
+          "address": "1234 127 Ave Edmonton AB",
+          "phone" : "780123456",
+          "remarks": "none"
+        }
+    ]
       }; 
    
       
       this.crashservice.addAccident(requestBody)
       .subscribe(
-        (res:any) =>{
-          let accident_id= res.id
-          if (this.getImages().length>0)
-              this.uploadImages(accident_id);
-          this.showMessage()
-          this.clearForm()
+        (res:any) =>{      
+          try {
+            const jsonResponse = JSON.parse(res);
+ 
+
+            let accident_id= jsonResponse.id
+            if (this.getImages().length>0)
+                this.uploadImages(accident_id);
+            this.showMessage()
+            this.clearForm()
+          } catch (e) {
+            console.log('Non-JSON response:');
+          }        
+        },
+        (error) => {
+          console.error('Request failed', error);
         }
       );
     

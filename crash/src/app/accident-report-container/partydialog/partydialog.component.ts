@@ -52,8 +52,7 @@ ngOnInit() {
 
 }
 onSubmit() {
-// code to save the party dialog
- console.log(this.form.get('PartyLastName')!.value)
+ 
  this.result={ 
       PartyLastName: this.form.controls['PartyLastName'],
       PartyFirstName:  this.form.controls['PartyFirstName'],
@@ -75,7 +74,6 @@ constructor( private formBuilder: FormBuilder,
         private cdf: ChangeDetectorRef ) 
 {
  
-    console.log("input data " +data)
 }
 
 ngAfterViewInit(): void {

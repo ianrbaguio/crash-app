@@ -1,0 +1,35 @@
+  <mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span>Accident location</span>
+ 
+        &nbsp;&nbsp;&nbsp;
+   
+      </mat-panel-title>
+
+    </mat-expansion-panel-header>  
+
+    <div id="map" style="width: 50%; height: 50%">
+       <google-map 
+            height="480px" 
+            width="640px" 
+            [center]="center" [zoom]="zoom" 
+            (mapClick)="moveMap($event)"
+            mapId="crashmap">
+            <map-advanced-marker 
+              #markerElem="mapAdvancedMarker"
+              [position]="{lat: this.center.lat, lng: this.center.lng }" 
+              [content]="this.carImg"
+              />
+            <map-info-window>
+             
+            </map-info-window>
+             
+      </google-map> 
+
+   </div>
+ <        <div id="dmap" style="height: 75%; width :65%; margin-left:auto; margin-right:auto; justify-content: center;" class="shadow-lg shadow-green-500 md:shadow-xl md:shadow-green-500">
+    </div>    
+  </mat-expansion-panel>
+</mat-accordion>

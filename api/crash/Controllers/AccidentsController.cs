@@ -86,8 +86,8 @@ namespace Crash.Controllers
          return accident;
       }
 
-      [HttpGet("images", Name = "GetImagtesByAccidentId")]
-      public async Task<AccidentImageDto> GetImagtesByAccidentIdAsync([FromQuery] Guid accidentId)
+      [HttpGet("images", Name = "GetImagesByAccidentId")]
+      public async Task<AccidentImageDto> GetImagesByAccidentIdAsync([FromQuery] Guid accidentId)
       {
         AccidentImageDto imageDto = await _mediatr.Send(new GetImagesByAccidentIdQuery() {AccidentId = accidentId});        
          return imageDto;
