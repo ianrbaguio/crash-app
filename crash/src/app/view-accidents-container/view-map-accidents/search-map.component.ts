@@ -313,7 +313,7 @@ export class SearchMapComponent  implements OnInit {
       this.rectangle.getBounds()?.toJSON().west,
      );
 
- 
+
     this.crashservice.getAccidentsWithinRectangle(
           this.rectangle.getBounds()?.toJSON().north,
           this.rectangle.getBounds()?.toJSON().south,

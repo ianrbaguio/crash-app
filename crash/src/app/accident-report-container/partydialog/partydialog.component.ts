@@ -52,7 +52,7 @@ ngOnInit() {
 
 }
 onSubmit() {
- 
+
  this.result={ 
       PartyLastName: this.form.controls['PartyLastName'],
       PartyFirstName:  this.form.controls['PartyFirstName'],
@@ -74,6 +74,7 @@ constructor( private formBuilder: FormBuilder,
         private cdf: ChangeDetectorRef ) 
 {
  
+
 }
 
 ngAfterViewInit(): void {
