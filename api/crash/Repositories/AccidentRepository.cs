@@ -27,7 +27,7 @@ namespace Crash.Repositories
         
             var accident= await _dbContext.accident.FirstOrDefaultAsync(e => e.Id == Id);
 
-            var parties = await _dbContext.parties.Where(e => e.AccidentId == Id).ToListAsync();
+            var parties = await _dbContext.party_details.Where(e => e.AccidentId == Id).ToListAsync();
              if (accident !=null) {
                 if (parties != null)
                     accident.Parties = parties;
@@ -95,7 +95,7 @@ namespace Crash.Repositories
 
             foreach(var accident in accidents)
             {
-                var parties = await _dbContext.parties.Where(e => e.AccidentId == accident.Id).ToListAsync();
+                var parties = await _dbContext.party_details.Where(e => e.AccidentId == accident.Id).ToListAsync();
                 accident.Parties = parties;
             }
              

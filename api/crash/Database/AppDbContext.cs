@@ -18,7 +18,7 @@ namespace Crash.Database
         public DbSet<Accident> accident { get; set;}
         public DbSet<Image> image { get; set; }
         public DbSet<CrashUser> crashuser { get; set;}
-        public DbSet<Party> parties { get; set; }
+        public DbSet<Party> party_details { get; set; }
 
 
         
