@@ -78,8 +78,7 @@ export class MapComponent implements OnInit {
   @Output() m_weather = new EventEmitter<string>()
   @Output() m_address = new EventEmitter<string>();
   @Output() m_weathericon = new EventEmitter<string>();
-
-
+  @Output() m_latng = new EventEmitter<google.maps.LatLngLiteral>();
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = (event.latLng.toJSON());
     if (event.latLng != null)
@@ -114,6 +113,7 @@ export class MapComponent implements OnInit {
 
     this.getWeather();
     this.getInfoFromAddress(this.center);
+ 
     //this.searchNearLandmark(this.center); -- placesAPI is call spits cross-origin error
   }
 
@@ -170,7 +170,7 @@ export class MapComponent implements OnInit {
           this.weathericon = this.WeatherData.weather[0].icon;
           this.m_weather.emit(this.weatherconditions);
           this.m_weathericon.emit(this.WeatherData.weather[0].icon)
-
+          this.m_latng.emit(this.center);
         });
 
 

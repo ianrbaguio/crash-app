@@ -31,3 +31,11 @@ As of February 21st, 2024, google.maps.Marker is deprecated. Please use google.m
 
 Bringing in in https://www.npmjs.com/package/@angular/google-maps/v/17.3.0-rc.0 
 to implement AdvancedMarkerElement as previous version is using Map.Marker element which is now deprecated 
+
+
+Add a key-value pair in environment.ts file as
+
+Crash_API_Endpoint: "http://localhost:5119"
+
+This is the API endpoint for CRUD operations to Crash Database
+

@@ -2,6 +2,7 @@
   <div >
     <h2 class="pb-2">Crash Entry</h2>
     <p class="text-red-500 text-xs italic">Please fill out this form.</p>
+    <p class="text-red-500 text-xs italic">* Required Fields.</p>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
       <div class="flex flex-wrap -mx-3 mb-6">
@@ -18,7 +19,7 @@
             <mat-datepicker #dtpicker></mat-datepicker>
           </div>
           @if (form.controls['DateIncident'].errors) {
-              <span> Date is Required </span>         
+              <span>* Required </span>         
                 }
         </div>
        
@@ -35,19 +36,58 @@
             <span> Time is Required </span>         
               }
         </div>
+        <div class="w-full md:w-1/2 px-3">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
+            Number of Parties Involved
+          </label>
+        <input 
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+
+        type="number" id="numberOfInputs" name="numberOfInputs" formControlName="NumPartiesInvolved" (input)="generatePartyFields()"  >
+        @if (form.controls['NumPartiesInvolved'].value<1) {
+          <span class="font-bold bg-red-500 text-white">* Required</span>         
+            }
+      </div>
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Cost">
+            Estimated Cost
+          </label>
+          <input
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="EstimateCost" type="text" value="0.00" formControlName="EstimateCost" type="number" >
+            @if (form.controls['EstimateCost'].errors) {
+              <span class="font-bold bg-red-500 text-white">* Required </span>         
+                }
+        </div>
        
       </div>
-      <div class="form-group">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
-          Party
-        </label>
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="numberparties" type="text" formControlName="Party" value="Pedestrian">
-          @if (form.controls['Party'].errors) {
-            <span class="font-bold bg-red-500 text-white"> Party is Required </span>         
-              }
-      </div>
+      <div class="form-group"> 
+              <div *ngIf="PartyFieldsGenerated">
+                 <div formArrayName="dynamicParties">
+                  <div *ngFor="let input of dynamicParties.controls; let i=index">
+              <!--       <mat-accordion [formControlName]="'mat-accordion'+i">
+                      <mat-expansion-panel [formControlName]="'mat-panel'+i"> -->
+
+ 
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
+                      Party {{i+1}}
+                    </label>
+                    <input type="text" [formControlName]="i" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                     <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold px-80 py-2 m-2"> 
+<<<<<<< HEAD
+                      <button [formControlName]="'d'+i"  (click)="this.openPartyDialog(i, this.PartyFields[i].PartyDetails)">Add Party Details</button>
+                   </div>
+          
+=======
+                      <button [formControlName]="'d'+i"  (click)="this.openPartyDialog(i,PartyDetails)">Add Party Details</button>
+                   </div>
+                <!--   </mat-expansion-panel>
+                 </mat-accordion> -->
+>>>>>>> 16ba6d3 (added visual features and interface of party details)
+                  </div>
+                </div>
+              </div>
+            </div>
 
     
 
@@ -58,9 +98,15 @@
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           id="location" formControlName="Location">
           @if (form.controls['Location'].errors) {
-            <span class="font-bold bg-red-500 text-white"> Location is Required </span>         
+            <span class="font-bold bg-red-500 text-white">* Required </span>         
               }
-        <crash-map (m_weather)="setWeather($event)" (m_address)="setAddress($event)" (m_weathericon)="setWeatherIcon($event)"></crash-map>
+        <crash-map (m_weather)="setWeather($event)" 
+                  (m_address)="setAddress($event)" 
+                  (m_weathericon)="setWeatherIcon($event)"
+                  (m_latng)="setLatlng($event)"
+                  >
+        
+        </crash-map>
       </div>
       <br>
       <div class="form-group">
@@ -73,44 +119,25 @@
             target="_blank"> </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Cost">
-            Estimated Cost
-          </label>
-          <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="EstimateCost" type="text" value="0.00" formControlName="EstimateCost" type="number" >
-            @if (form.controls['EstimateCost'].errors) {
-              <span class="font-bold bg-red-500 text-white"> Estimate Cost is Required </span>         
-                }
-        </div>
-        <div class="w-full md:w-1/2 px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
-            Number of Parties Involved
-          </label>
-          <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="numberparties" type="text" formControlName="NumPartiesInvolved" value="1" type="number">
-        </div>
+       
       </div>
 
       <div class="w-full md:w-1/2 px-3">
         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Images">
           Accident Images
         </label>
-        <crash-upload-images (m_image)="setImage1($event)"></crash-upload-images>
-        <crash-upload-images (m_image)="setImage2($event)"></crash-upload-images>
-        <crash-upload-images (m_image)="setImage3($event)"></crash-upload-images>
+        <div class="form-group">  
+        <crash-upload-images  (m_image)="setImage1($event)"></crash-upload-images>
+        <crash-upload-images  (m_image)="setImage2($event)"></crash-upload-images>
+        <crash-upload-images  (m_image)="setImage3($event)"></crash-upload-images>
+      </div>
       </div>
       <br>
       <button type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Submit</button>
       <br>
       @if (!form.valid && submitted) {
-        <span class="font-bold bg-red-500 text-white"> Fields in red cannot be blank </span>         
+        <span class="font-bold bg-red-500 text-white"> * Required Fields</span>         
           }
     </form>
-
   </div>
-
-
 </div>

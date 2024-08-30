@@ -1,5 +1,4 @@
-import { Component,EventEmitter,OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component,ElementRef,EventEmitter,OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule  } from '@angular/common';
 @Component({
   selector: 'crash-upload-images',
@@ -9,38 +8,34 @@ import { CommonModule  } from '@angular/common';
   styleUrl: './upload.component.scss'
 })
 export class UploadComponent implements OnInit{
+  @ViewChild('previewRef', { static: false }) previewRef!: ElementRef;
   currentFile?: File;
   message = '';
-  preview = '';
-
-  imageInfos?: Observable<any>;
- @Output() m_image =new EventEmitter<any>()
+ 
+  @Output() m_image =new EventEmitter<any>()
   constructor() { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
   selectFile(event: any): void {
     this.message = '';
-    this.preview = '';
     const selectedFiles = event.target.files;
-  
     if (selectedFiles) {
       const file: File | null = selectedFiles.item(0);
   
       if (file) {
-        this.preview = '';
+ 
         this.currentFile = file;
-  
         const reader = new FileReader();
-  
         reader.onload = (e: any) => {
-          this.preview = e.target.result;
+          this.previewRef.nativeElement.src = reader.result as string;
         };
         this.m_image.emit(file);
         reader.readAsDataURL(this.currentFile);
       }
     }
   }
-
+clearImage() {
+    // Clear the image by setting its source to an empty string
+    this.previewRef.nativeElement.src = '';
+  }
 }

@@ -5,10 +5,10 @@ const query = readFileSync(".data/scripts/crash-migration.sql", "utf-8");
 
 const dbConfig = {
   user: "postgres",
-  password: "[password]",
+  password: "postgres",
   host: "localhost",
   port: "5432",
-  database: "Crash",
+  database: "crash",
 };
 
 // Create a new PostgreSQL client
