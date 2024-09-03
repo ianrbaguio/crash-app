@@ -1,9 +1,32 @@
-DROP TABLE IF EXISTS CrashUser;
-CREATE TABLE CrashUser (
-	id UUID NOT NULL DEFAULT gen_random_uuid(),
-	username VARCHAR(50) NOT NULL,
-	PRIMARY KEY(id)
+-- DROP TABLE IF EXISTS public.accident;
+CREATE TABLE IF NOT EXISTS public.accident
+(
+    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "AccidentId" integer NOT NULL,
+    "Location" text COLLATE pg_catalog."default" NOT NULL,
+    "Latitude" double precision NOT NULL,
+    "Longitude" double precision NOT NULL,
+    "AccidentDate" timestamp with time zone NOT NULL,
+    "Weather" text COLLATE pg_catalog."default" NOT NULL,
+    "Daylight" text COLLATE pg_catalog."default" NOT NULL,
+    "EstimatedCost" double precision NOT NULL,
+    "NumberOfParties" integer NOT NULL,
+    "Parties" text[] COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "PK_Accidents" PRIMARY KEY ("Id")
 );
+
+-- DROP TABLE IF EXISTS public.image;
+CREATE TABLE IF NOT EXISTS public.image
+(
+    "Id" integer NOT NULL DEFAULT nextval('id_seq'::regclass),
+    "AccidentId" uuid,
+    "ImageData" bytea,
+    CONSTRAINT images_pkey PRIMARY KEY ("Id")
+);
+
+
+
+
 
 INSERT INTO CrashUser
 VALUES (gen_random_uuid(), 'ianb'), 
@@ -12,6 +35,7 @@ VALUES (gen_random_uuid(), 'ianb'),
 (gen_random_uuid(), 'mounikal'),
 (gen_random_uuid(), 'vijit'),
 (gen_random_uuid(), 'darrelb');
+
 
 DROP TABLE IF EXISTS Accident;
 
@@ -73,6 +97,9 @@ CREATE TABLE IF NOT EXISTS public.image
 )
 
 TABLESPACE pg_default;
+=======
+
+
 
 ALTER TABLE IF EXISTS public.image
     OWNER to crash;
