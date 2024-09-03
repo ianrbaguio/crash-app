@@ -27,6 +27,12 @@ namespace Crash.Repositories
         
             var accident= await _dbContext.accident.FirstOrDefaultAsync(e => e.Id == Id);
 
+            var parties = await _dbContext.party_details.Where(e => e.AccidentId == Id).ToListAsync();
+             if (accident !=null) {
+                if (parties != null)
+                    accident.Parties = parties;
+            
+            }
             if (accident == null)
                 throw new Exception("Accident is not found." );
             else
@@ -84,7 +90,16 @@ namespace Crash.Repositories
  
         public async Task<List<Accident>> GetAccidentListAsync()
         {
-            return await _dbContext.accident.ToListAsync();
+
+            var accidents= await _dbContext.accident.ToListAsync();
+
+            foreach(var accident in accidents)
+            {
+                var parties = await _dbContext.party_details.Where(e => e.AccidentId == accident.Id).ToListAsync();
+                accident.Parties = parties;
+            }
+             
+            return accidents;
         }
  
         public Task<List<Accident>> GetAccidentListByRegionAsync(double North, double South, double East, double West)

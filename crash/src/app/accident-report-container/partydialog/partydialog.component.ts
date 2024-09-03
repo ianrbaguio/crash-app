@@ -1,6 +1,8 @@
+
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators,  ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule ,} from '@angular/material/input';
@@ -36,14 +38,18 @@ export interface IPartyDetails {
   templateUrl: './partydialog.component.html',
   styleUrl: './partydialog.component.scss' 
 })
+
 export class PartydialogComponent implements OnInit, AfterViewInit{
   form! : FormGroup; 
   result!:  IPartyDetails
+
+
 ngOnInit() {
   this.form = new FormGroup({
     PartyLastName: new FormControl('',[Validators.required]),
     PartyFirstName: new FormControl('',[Validators.required]),
     PartyAddress  : new FormControl('',[Validators.required]),
+
     PartyPhone: new FormControl(''),
     PartyLicense: new FormControl('',[Validators.required]),
     PartyRemarks: new FormControl('',[Validators.required]) 
@@ -52,8 +58,7 @@ ngOnInit() {
 
 }
 onSubmit() {
-// code to save the party dialog
- console.log(this.form.get('PartyLastName')!.value)
+
  this.result={ 
       PartyLastName: this.form.controls['PartyLastName'],
       PartyFirstName:  this.form.controls['PartyFirstName'],
@@ -75,7 +80,8 @@ constructor( private formBuilder: FormBuilder,
         private cdf: ChangeDetectorRef ) 
 {
  
-    console.log("input data " +data)
+
+
 }
 
 ngAfterViewInit(): void {
@@ -96,7 +102,6 @@ setDefaultInputs(){
 onNoClick(): void {
       
   this.dialogRef.close();
-
     }
     
 }

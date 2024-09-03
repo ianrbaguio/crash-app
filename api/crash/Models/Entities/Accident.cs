@@ -18,7 +18,7 @@ namespace Crash.Models.Entities
         public int NumberOfParties { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public List<string> Parties { get; set; } = new List<string>();
-
+  
+       public List<Party> Parties { get; set; } = new List<Party>();
     }
 }

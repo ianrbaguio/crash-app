@@ -15,8 +15,12 @@ namespace Crash.Database
                the table name case-sensitive. Using CREATE TABLE [name] in postgres or pgAdmin
                it creates the table names in all lower-case.
       */
-      public DbSet<Accident> accident { get; set;}
+        public DbSet<Accident> accident { get; set;}
         public DbSet<Image> image { get; set; }
         public DbSet<CrashUser> crashuser { get; set;}
-   }
+        public DbSet<Party> party_details { get; set; }
+
+
+        
+    }
 }

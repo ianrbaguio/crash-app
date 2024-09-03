@@ -1,5 +1,8 @@
 
+ 
 import { Component ,OnInit, ChangeDetectorRef, QueryList, ViewChildren,Inject, AfterViewInit} from '@angular/core';
+ 
+
 import { CommonModule, DatePipe} from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder,FormGroup,FormControl, ReactiveFormsModule ,Validators, FormArray} from '@angular/forms';
@@ -49,7 +52,9 @@ export interface IPartyDetails {
 
 
 
+
 export class IntakeComponent  implements OnInit, AfterViewInit  {
+
   @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
   
   form : FormGroup = new FormGroup({
@@ -63,12 +68,14 @@ export class IntakeComponent  implements OnInit, AfterViewInit  {
       
 });
 
-PartyDetails: IPartyDetails={ PartyLastName: 'Gonzales',
-      PartyFirstName:  'Mario',
-      PartyAddress  :  'Edmonton',
-      PartyPhone: '123456789',
-      PartyLicense:  'ABX',
-      PartyRemarks: 'Rtest' }
+ 
+PartyDetails: IPartyDetails={ PartyLastName: '',
+      PartyFirstName:  '',
+      PartyAddress  :  '',
+      PartyPhone: '',
+      PartyLicense:  '',
+      PartyRemarks: '' }
+ 
  
 PartyFieldsGenerated: boolean = false;
 PartyFields: {name: string, value: string, PartyDetails: IPartyDetails }[] = [];
@@ -134,20 +141,12 @@ generatePartyFields() {
     else
       {
         const diff = numberOfInputs - this.dynamicParties.length     
-        if (diff  > 0) {     
-              
-              this.dynamicParties.push(this.formBuilder.control('', Validators.required));
-              this.PartyFields.push({name: '', value: '', PartyDetails: 
-                    {
-                      PartyLastName: '',
-                      PartyFirstName:  '',
-                      PartyAddress  :  '',
-                      PartyPhone: '',
-                      PartyLicense:  '',
-                      PartyRemarks: '' 
-                    }
-            })
-            
+
+        if (diff  > 0) {     {
+          this.dynamicParties.push(this.formBuilder.control('', Validators.required));
+          this.PartyFields.push({name: '', value: '', PartyDetails: this.PartyDetails})
+        }
+
           
        } else if (diff  < 0) {
          for (let i = 0; i < Math.abs(diff); i++) {
@@ -206,14 +205,15 @@ get dynamicParties() {
 }
 
 onSubmit(): void{
-  console.log(this.PartyFields.length)
+
   if (this.form.invalid) {  
+    console.log("Form contains invalid data")
     return;
   }
   this.submitted = true;
     const day:string =   this.form.controls["TimeIncident"].value 
      const requestBody = {
-        id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+       // HARDCORDING PARTIES FOR TESTING ONLY
         accidentId: 0,
         location: this.form.controls["Location"].value,
         accidentDate:this.form.controls["DateIncident"].value,
@@ -223,18 +223,44 @@ onSubmit(): void{
         numberOfParties: 1,
         latitude: this.latitude,
         longitude: this.longitude,
-        parties: this.dynamicParties.value
+        parties: [ {
+          "license": "ABC123456",
+          "lastname": "Horton",
+          "firstname": "Tim",
+          "address": "1234 127 Ave Edmonton AB",
+          "phone" : "780123456",
+          "remarks": "none"
+        },
+     {
+          "license": "XYZ123456",
+          "lastname": "Horton",
+          "firstname": "Tim",
+          "address": "1234 127 Ave Edmonton AB",
+          "phone" : "780123456",
+          "remarks": "none"
+        }
+    ]
       }; 
    
       
       this.crashservice.addAccident(requestBody)
       .subscribe(
-        (res:any) =>{
-          let accident_id= res.id
-          if (this.getImages().length>0)
-              this.uploadImages(accident_id);
-          this.showMessage()
-          this.clearForm()
+        (res:any) =>{      
+          try {
+            const jsonResponse = JSON.parse(res);
+ 
+
+            let accident_id= jsonResponse.id
+            if (this.getImages().length>0)
+                this.uploadImages(accident_id);
+            this.showMessage()
+            this.clearForm()
+          } catch (e) {
+            console.log('Non-JSON response:');
+          }        
+        },
+        (error) => {
+          console.error('Request failed', error);
         }
       );
     
@@ -285,10 +311,11 @@ uploadImages(accident_id: string): void {
  if (this.PartyFields[i]?.PartyDetails==null)
     this.PartyFields[i].PartyDetails=this.PartyDetails;
     m_data=this.PartyFields[i].PartyDetails;  
+
  
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px', 
-      height: '400px', 
+      height: '450px', 
       data:  m_data
     });
 
@@ -296,6 +323,7 @@ uploadImages(accident_id: string): void {
  
       this.PartyFields[i].PartyDetails=<IPartyDetails>result;
      
+
     });
   }
 
