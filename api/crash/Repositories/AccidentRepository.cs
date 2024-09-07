@@ -92,6 +92,7 @@ namespace Crash.Repositories
         {
 
             var accidents= await _dbContext.accident.ToListAsync();
+            accidents = accidents.OrderByDescending(o=>o.AccidentDate).ToList();
 
             foreach(var accident in accidents)
             {
