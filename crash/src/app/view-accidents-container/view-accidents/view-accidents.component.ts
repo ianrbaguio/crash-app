@@ -54,6 +54,15 @@ export class ViewAccidentsComponent {
       { queryParams: { id: accident} }
     );
   }
+  formatDateTime(date: string):string{
+    return new Date(date).toLocaleString();
+  }
 
-
+  
+  GetPartiesAsString(parties: any[]){
+    if (parties == null || parties.length === 0) {
+      return "";
+    }
+    return parties.map(party => `${party.lastName} ${party.firstName}`).join(', ');
+  }
 }

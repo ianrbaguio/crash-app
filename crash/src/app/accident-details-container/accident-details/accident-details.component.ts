@@ -14,12 +14,22 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SearchMapComponent } from "../../view-accidents-container/view-map-accidents/search-map.component";
 import {AccidentMapComponent} from '../accident-mapdetails/accidentmap.component'
 import { delay } from 'rxjs/operators'; // For simulating an API delay
+import {MatTableModule, MatTableDataSource} from '@angular/material/table';
+
+interface PartyModel{
+  lastName: string,
+  firstName: string,
+  address: string,
+  phone: string,
+  license: string,
+  remarks: string,
+}
 @Component({
   selector: 'crash-accident-details',
 
   standalone: true,
   imports: [CommonModule, RouterOutlet, ReactiveFormsModule,
-    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent, SearchMapComponent],
+    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent, SearchMapComponent, MatTableModule],
     providers: [CrashService,CurrencyPipe ],
   templateUrl: './accident-details.component.html',
   styleUrl: './accident-details.component.scss'
@@ -29,7 +39,8 @@ export class AccidentDetailsComponent implements OnInit {
   thumbnail: any;
   imagesa: Array<object> = [];
   imagengx: Array<string> = [];
-  partieslist: Array<string> = [];
+  displayedColumns: string[] = ['lastName', 'firstName', 'address', 'phone', 'license', 'remarks']; 
+  dataSource1!: MatTableDataSource<PartyModel>;
 
   form : FormGroup = new FormGroup({
     DateIncident: new FormControl(new Date()),
@@ -58,15 +69,13 @@ ngOnInit() :void{
   
 
   this.accidentservice.getAccidentsById(this.accidentId)
-   // .pipe(delay(2000)) // Simulate a delay
       .subscribe(data => {     
         var obj = (JSON.stringify(data));
         var parsed = JSON.parse(obj);  
         const [date, time] = parsed.accidentDate.split("T");
          this.form.controls['DateIncident'].setValue(date ) ;
-         this.form.controls['TimeIncident'].setValue(time ) ;
-        //this.form.controls['Party'].setValue(parsed.parties ) ;
-         this.partieslist= parsed.parties;
+         this.form.controls['TimeIncident'].setValue(this.formatTime(parsed.accidentDate) ) ;
+         this.dataSource1 = new MatTableDataSource(<PartyModel[]> parsed.parties);
          this.form.controls['NumPartiesInvolved'].setValue(parsed.numberOfParties ) ;
          this.form.controls['Location'].setValue(parsed.location) ;
          this.form.controls['WeatherConditions'].setValue(parsed.weather ) ;
@@ -81,8 +90,7 @@ ngOnInit() :void{
         this.cdr.detectChanges();
      } );
 
-     this.accidentservice.getImagesByAccidentsId (this.accidentId)
-    
+     this.accidentservice.getImagesByAccidentsId (this.accidentId)    
      .subscribe(data => {     
       if (data!=null){
         var obj = (JSON.stringify(data));
@@ -113,6 +121,9 @@ createGmapLATLANG(LAT:any, LNG:any){
 
     console.log("createGmapLATLANG"  )
     //console.log(  this.center)
+}
+formatTime(time: string) {
+  return new Date(time).toLocaleTimeString();
 }
 
 }
