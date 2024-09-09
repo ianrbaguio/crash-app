@@ -21,7 +21,10 @@ namespace Crash.Handlers.Command
         {
             
             var accident = _mapper.Map<Accident>(command.Accident);
-            Accident _accident= await _accidentRepository.AddAccidentAsync(accident);
+            var partyDetails = _mapper.Map<Party[]>(command.PartyDetails);
+         
+            Accident _accident= await _accidentRepository.AddAccidentAsync(accident, partyDetails);
+           
             return _mapper.Map<AccidentDto>(accident);
         }
     }

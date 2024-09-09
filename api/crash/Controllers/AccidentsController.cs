@@ -51,7 +51,7 @@ namespace Crash.Controllers
         public async Task<AccidentDto> AddAccidentAsync([FromBody] AccidentDto accident)
         {
 
-            var command = new CreateAccident { Accident = accident };
+            var command = new CreateAccident { Accident = accident, PartyDetails = accident.parties };
             var _accident = await _mediatr.Send(command);
             return _accident;
         }
