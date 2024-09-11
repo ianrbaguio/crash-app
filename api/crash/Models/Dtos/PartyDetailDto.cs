@@ -1,6 +1,6 @@
 ﻿namespace Crash.Models.Dtos
 {
-    public class PartyDto
+    public class PartyDetailDto
     {
        public Guid AccidentId { get; set; }
         public string License { get; set; }

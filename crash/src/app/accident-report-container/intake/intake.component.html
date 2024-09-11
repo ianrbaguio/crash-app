@@ -1,141 +1,210 @@
-<div id="info" [ngClass]="{'flex justify-center ...': !this.smallscreen}">
-  <div >
+<div id="info" [ngClass]="{ 'flex justify-center ...': !this.smallscreen }">
+  <div>
     <h2 class="pb-2">Crash Entry</h2>
     <p class="text-red-500 text-xs italic">Please fill out this form.</p>
     <p class="text-red-500 text-xs italic">* Required Fields.</p>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="DateIncident" >
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="DateIncident"
+          >
             Date of Incident
           </label>
           <div>
-            <input  [matDatepicker]="dtpicker" 
+            <input
+              [matDatepicker]="dtpicker"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              formControlName="DateIncident"  readonly="true">
+              formControlName="DateIncident"
+              readonly="true"
+            />
             <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="dtpicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="dtpicker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #dtpicker></mat-datepicker>
           </div>
           @if (form.controls['DateIncident'].errors) {
-              <span>* Required </span>         
-                }
+          <span>* Required </span>
+          }
         </div>
-       
+
         <div class="w-full md:w-1/2 px-3">
-          <mat-label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="incidenttime">
+          <mat-label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="incidenttime"
+          >
             Time of Incident
           </mat-label>
 
-          <input [ngxMatTimepicker]="picker" [required]="true"
+          <input
+            [ngxMatTimepicker]="picker"
+            [required]="true"
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            formControlName="TimeIncident"  readonly="true">
+            formControlName="TimeIncident"
+            readonly="true"
+          />
           <ngx-mat-timepicker #picker></ngx-mat-timepicker>
           @if (form.controls['TimeIncident'].errors) {
-            <span> Time is Required </span>         
-              }
+          <span> Time is Required </span>
+          }
         </div>
         <div class="w-full md:w-1/2 px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="numberparties"
+          >
             Number of Parties Involved
           </label>
-        <input 
-        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-
-        type="number" id="numberOfInputs" name="numberOfInputs" formControlName="NumPartiesInvolved" (input)="generatePartyFields()"  >
-        @if (form.controls['NumPartiesInvolved'].value<1) {
-          <span class="font-bold bg-red-500 text-white">* Required</span>         
-            }
-      </div>
+          <input
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="number"
+            id="numberOfInputs"
+            name="numberOfInputs"
+            formControlName="NumPartiesInvolved"
+            (input)="generatePartyFields()"
+          />
+          @if (form.controls['NumPartiesInvolved'].value<1) {
+          <span class="font-bold bg-red-500 text-white">* Required</span>
+          }
+        </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Cost">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="Cost"
+          >
             Estimated Cost
           </label>
           <input
             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="EstimateCost" type="text" value="0.00" formControlName="EstimateCost" type="number" >
-            @if (form.controls['EstimateCost'].errors) {
-              <span class="font-bold bg-red-500 text-white">* Required </span>         
-                }
+            id="EstimateCost"
+            type="text"
+            value="0.00"
+            formControlName="EstimateCost"
+            type="number"
+          />
+          @if (form.controls['EstimateCost'].errors) {
+          <span class="font-bold bg-red-500 text-white">* Required </span>
+          }
         </div>
-       
       </div>
-      <div class="form-group"> 
-              <div *ngIf="PartyFieldsGenerated">
-                 <div formArrayName="dynamicParties">
-                  <div *ngFor="let input of dynamicParties.controls; let i=index">
+      <div class="form-group">
+        <div *ngIf="PartyFieldsGenerated">
+          <div formArrayName="dynamicParties">
+            <div *ngFor="let input of dynamicParties.controls; let i = index">
               <!--       <mat-accordion [formControlName]="'mat-accordion'+i">
                       <mat-expansion-panel [formControlName]="'mat-panel'+i"> -->
 
- 
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="numberparties">
-                      Party {{i+1}}
-                    </label>
-                    <input type="text" [formControlName]="i" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                     <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold px-80 py-2 m-2"> 
- 
-                      <button [formControlName]="'d'+i"  (click)="this.openPartyDialog(i, this.PartyFields[i].PartyDetails)">Add Party Details</button>
-                   </div>
-          
-  
-                   </div>
-   
- 
-                  </div>
-                </div>
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="numberparties"
+              >
+                Party {{ i + 1 }}
+              </label>
+              <input
+                type="text"
+                [formControlName]="i"
+                [value]="
+                  this.PartyFields[i].PartyDetails.firstName +
+                  ' ' +
+                  this.PartyFields[i].PartyDetails.lastName
+                "
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+              <div
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold px-80 py-2 m-2"
+              >
+                <button
+                  [formControlName]="'d' + i"
+                  (click)="
+                    this.openPartyDialog(i, this.PartyFields[i].PartyDetails)
+                  "
+                >
+                  Add Party Details
+                </button>
               </div>
-             
-
-    
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="form-group">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Location">Location of
-          Incident: </label>
-        <input type="text"
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="Location"
+          >Location of Incident:
+        </label>
+        <input
+          type="text"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="location" formControlName="Location">
-          @if (form.controls['Location'].errors) {
-            <span class="font-bold bg-red-500 text-white">* Required </span>         
-              }
-        <crash-map (m_weather)="setWeather($event)" 
-                  (m_address)="setAddress($event)" 
-                  (m_weathericon)="setWeatherIcon($event)"
-                  (m_latng)="setLatlng($event)"
-                  >
-        
+          id="location"
+          formControlName="Location"
+        />
+        @if (form.controls['Location'].errors) {
+        <span class="font-bold bg-red-500 text-white">* Required </span>
+        }
+        <crash-map
+          (m_weather)="setWeather($event)"
+          (m_address)="setAddress($event)"
+          (m_weathericon)="setWeatherIcon($event)"
+          (m_latng)="setLatlng($event)"
+        >
         </crash-map>
       </div>
-      <br>
+      <br />
       <div class="form-group">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          for="weatherconditions">Weather Conditions</label>
-        <input type="text"
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="weatherconditions"
+          >Weather Conditions</label
+        >
+        <input
+          type="text"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="weatherconditions" formControlName="WeatherConditions">
-        <div *ngIf="WeatherIcon != ''"> <img src="https://openweathermap.org/img/wn/{{WeatherIcon}}.png"
-            target="_blank"> </div>
+          id="weatherconditions"
+          formControlName="WeatherConditions"
+        />
+        <div *ngIf="WeatherIcon != ''">
+          <img
+            src="https://openweathermap.org/img/wn/{{ WeatherIcon }}.png"
+            target="_blank"
+          />
+        </div>
       </div>
-      <div class="flex flex-wrap -mx-3 mb-6">
-       
-      </div>
+      <div class="flex flex-wrap -mx-3 mb-6"></div>
 
       <div class="w-full md:w-1/2 px-3">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="Images">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="Images"
+        >
           Accident Images
         </label>
-        <div class="form-group">  
-        <crash-upload-images  (m_image)="setImage1($event)"></crash-upload-images>
-        <crash-upload-images  (m_image)="setImage2($event)"></crash-upload-images>
-        <crash-upload-images  (m_image)="setImage3($event)"></crash-upload-images>
+        <div class="form-group">
+          <crash-upload-images
+            (m_image)="setImage1($event)"
+          ></crash-upload-images>
+          <crash-upload-images
+            (m_image)="setImage2($event)"
+          ></crash-upload-images>
+          <crash-upload-images
+            (m_image)="setImage3($event)"
+          ></crash-upload-images>
+        </div>
       </div>
-      </div>
-      <br>
-      <button type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Submit</button>
-      <br>
+      <br />
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Submit
+      </button>
+      <br />
       @if (!form.valid && submitted) {
-        <span class="font-bold bg-red-500 text-white"> * Required Fields</span>         
-          }
+      <span class="font-bold bg-red-500 text-white"> * Required Fields</span>
+      }
     </form>
   </div>
 </div>
