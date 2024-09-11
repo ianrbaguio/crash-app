@@ -2,7 +2,8 @@
     <label (click)="dataSortAndPagination()">Accidents</label>
   </div>
   
-  <div>
+  <div #TABLE>
+    <button class="export-button" mat-flat-button color="primary" (click)="exportexcel()" alig>Export to Excel</button>
     <mat-table [dataSource]="dataSource1" matSort>
       <!-- Id Column  -->
       <ng-container matColumnDef="id">
@@ -10,25 +11,29 @@
         <mat-cell *matCellDef="let element"> <a>{{element.id}}</a></mat-cell>
       </ng-container>
       <!-- Location Column -->
-      <ng-container matColumnDef="location">
+      <ng-container matColumnDef="Location">
         <mat-header-cell *matHeaderCellDef mat-sort-header > Location </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
       </ng-container>
       <!-- Date Column -->
-      <ng-container matColumnDef="accidentDate">
+      <ng-container matColumnDef="AccidentDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.accidentDate}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{formatDateTime(element.accidentDate)}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="EstimatedCost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Estimated Cost </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.estimatedCost}} </mat-cell>
       </ng-container>
       <!-- Number Of Parties Column-->
-      <ng-container matColumnDef="parties">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Number Of Parties </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.parties}} </mat-cell>
+      <ng-container matColumnDef="NumberOfParties">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Parties </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.numberOfParties}} </mat-cell>
       </ng-container> 
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <!--<mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row> -->
       <mat-row (click)="getAccident(row.id)"  *matRowDef="let row; columns: displayedColumns"  ></mat-row>
     </mat-table>
-    <mat-paginator #paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons ></mat-paginator>
+    <mat-paginator #paginator [pageSizeOptions]="[10,25,100]" showFirstLastButtons ></mat-paginator>
   </div>
   

@@ -69,15 +69,45 @@
                 <input type="text"
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="numberparties" formControlName="NumPartiesInvolved" >      
-              </div>
-              <div>
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="party">Party</label>
-                <div *ngFor="let party of partieslist" class="form-group">
-                  <input type="text"
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="party" value={{party}} >      
-              </div>  
-            </div>           
+              </div>         
+        </div>
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="party">Party</label>
+          <mat-table [dataSource]="dataSource1">
+            <ng-container matColumnDef="lastName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header > Last Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <a>{{element.lastName}}</a></mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="firstName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header > First Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="phone">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="license">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> License </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.license}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="remarks">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Remarks</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.remarks}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
         </div>
 
         <h2 class="pb-2">Accident Images</h2>
