@@ -1,12 +1,26 @@
-
-import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators,  ReactiveFormsModule } from '@angular/forms';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule ,} from '@angular/material/input';
-import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS,   MAT_DIALOG_DATA ,
+import { MatInputModule } from '@angular/material/input';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
   MatDialogActions,
@@ -14,94 +28,80 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS,   MAT_DIALOG_DATA ,
   MatDialogTitle,
   MatDialogContent,
 } from '@angular/material/dialog';
- 
+
 export interface IPartyDetails {
-  PartyLastName: any,
-  PartyFirstName:  any,
-  PartyAddress  :  any,
-  PartyPhone: any,
-  PartyLicense:  any,
-  PartyRemarks: any 
-} 
+  firstName: '';
+  lastName: '';
+  address: '';
+  phone: '';
+  licenseNumber: '';
+  remarks: '';
+}
 @Component({
   selector: 'crash-partydialog',
-  template: `
-    <div id="mapd" style="height: 400px;" >
-  `,
+  template: ` <div id="mapd" style="height: 400px;"></div> `,
 
-   standalone: true, 
-   imports: [MatDialogTitle, MatDialogContent, MatIcon, 
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatIcon,
     MatDialogActions,
     MatDialogClose,
     MatDialogTitle,
-    MatDialogContent,],
+    MatDialogContent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './partydialog.component.html',
-  styleUrl: './partydialog.component.scss' 
+  styleUrl: './partydialog.component.scss',
 })
+export class PartydialogComponent implements OnInit, AfterViewInit {
+  form: FormGroup = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+    phone: new FormControl(''),
+    licenseNumber: new FormControl('', [Validators.required]),
+    remarks: new FormControl('', [Validators.required]),
+  });
+  result!: IPartyDetails;
 
-export class PartydialogComponent implements OnInit, AfterViewInit{
-  form! : FormGroup; 
-  result!:  IPartyDetails
+  ngOnInit() {}
 
+  onSubmit() {
+    this.result = {
+      firstName: this.form.controls['firstName'].value,
+      lastName: this.form.controls['lastName'].value,
+      address: this.form.controls['address'].value,
+      phone: this.form.controls['phone'].value,
+      licenseNumber: this.form.controls['licenseNumber'].value,
+      remarks: this.form.controls['remarks'].value,
+    };
 
-ngOnInit() {
-  this.form = new FormGroup({
-    PartyLastName: new FormControl('',[Validators.required]),
-    PartyFirstName: new FormControl('',[Validators.required]),
-    PartyAddress  : new FormControl('',[Validators.required]),
+    this.dialogRef.close(this.result);
+  }
 
-    PartyPhone: new FormControl(''),
-    PartyLicense: new FormControl('',[Validators.required]),
-    PartyRemarks: new FormControl('',[Validators.required]) 
-});
+  constructor(
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<PartydialogComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: IPartyDetails,
+    private cdf: ChangeDetectorRef
+  ) {}
 
-
-}
-onSubmit() {
-
- this.result={ 
-      PartyLastName: this.form.controls['PartyLastName'],
-      PartyFirstName:  this.form.controls['PartyFirstName'],
-      PartyAddress  :  this.form.controls['PartyAddress'],
-      PartyPhone: this.form.controls['PartyPhone'],
-      PartyLicense:  this.form.controls['PartyLicense'],
-      PartyRemarks: this.form.controls['PartyRemarks'] 
-}
-
-
-console.log(this.result.PartyFirstName);
-this.dialogRef.close(this.result);
-}
-
-
-constructor( private formBuilder: FormBuilder, 
-        private dialogRef: MatDialogRef<PartydialogComponent>, @Inject(MAT_DIALOG_DATA) 
-        public data: IPartyDetails,
-        private cdf: ChangeDetectorRef ) 
-{
- 
-
-
-}
-
-ngAfterViewInit(): void {
- 
-  this.cdf.detectChanges(); 
-  this.setDefaultInputs();
-}
-setDefaultInputs(){
- 
-  this.form.controls["PartyLastName"].setValue(this.data.PartyLastName);
-  this.form.controls["PartyFirstName"].setValue(this.data.PartyFirstName);
-  this.form.controls['PartyAddress'].setValue(this.data.PartyAddress);
-  this.form.controls['PartyPhone'].setValue(this.data.PartyPhone);
-  this.form.controls['PartyLicense'].setValue(this.data.PartyLicense);
-  this.form.controls['PartyRemarks'].setValue(this.data.PartyRemarks);
-  
-}
-onNoClick(): void {
-      
-  this.dialogRef.close();
-    }
-    
+  ngAfterViewInit(): void {
+    this.cdf.detectChanges();
+    this.setDefaultInputs();
+  }
+  setDefaultInputs() {
+    this.form.controls['firstName'].setValue(this.data.firstName);
+    this.form.controls['lastName'].setValue(this.data.lastName);
+    this.form.controls['address'].setValue(this.data.address);
+    this.form.controls['phone'].setValue(this.data.phone);
+    this.form.controls['licenseNumber'].setValue(this.data.licenseNumber);
+    this.form.controls['remarks'].setValue(this.data.remarks);
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

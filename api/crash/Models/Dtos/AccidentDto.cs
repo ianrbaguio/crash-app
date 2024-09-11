@@ -16,7 +16,8 @@ namespace Crash.Models.Dtos
         public int NumberOfParties { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-         
-        public List<PartyDto> Parties { get; set; }
+
+        public List<PartyDetailDto> parties { get; set; }
+        
     }
 }
