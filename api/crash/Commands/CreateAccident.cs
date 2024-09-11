@@ -11,5 +11,7 @@ namespace Crash.Commands
     {   
         public AccidentDto Accident { get; set; }
 
+      public List<PartyDetailDto> PartyDetails { get; set; } = [];
+
     }
 }
