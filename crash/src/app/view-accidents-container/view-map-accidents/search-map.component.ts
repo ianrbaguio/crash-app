@@ -210,7 +210,11 @@ export class SearchMapComponent  implements OnInit {
     let startDate:Date = this.crashsites.reduce((min, site) => 
         (site.accidentDate < min? site.accidentDate : min), this.crashsites[0]?.accidentDate);
     let EndDate:Date =this.crashsites.reduce((max, site) => 
-        (site.accidentDate > max ? site.accidentDate : max), this.crashsites[0]?.accidentDate);;
+        (site.accidentDate > max ? site.accidentDate : max), this.crashsites[0]?.accidentDate);
+    let lowestAmount:number = this.crashsites.reduce((min, site) => 
+        (site.estimatedCost < min? site.estimatedCost : min), this.crashsites[0]?.estimatedCost);
+    let maxAmount:number =this.crashsites.reduce((max, site) => 
+        (site.estimatedCost > max ? site.estimatedCost  : max), this.crashsites[0]?.estimatedCost );;
     let totalEstimatedCost=this.crashsites.reduce((total, site) => 
         total + site.estimatedCost, 0);
     let incidence=this.crashsites.length/this.rectangleArea 
@@ -218,25 +222,60 @@ export class SearchMapComponent  implements OnInit {
            '<span style="background-color:MediumSeaGreen;">Low incidence </span>':   
            incidence<1?
             '<span style="background-color:yellow;" >Average incidence </span>'  :
-            '<span style="background-color:red;"><img src="https://media.tenor.com/Ph2cKlohzRIAAAAi/health-warning.gif" style="width:50px;height:50px;">High incidence </span>'  
+            '<span style="background-color:red; display: inline-flex; align-items: center;"><img src="https://media.tenor.com/Ph2cKlohzRIAAAAi/health-warning.gif" style="width:50px;height:50px;">High incidence&nbsp;&nbsp; &nbsp;  </span>'  
 
    // let areaCovered: number = this.crashsites.reduce()
     var datePipe = new DatePipe('en-US');
       
       return (
-          `<h3 class="font-bold bg-gray-500 text-white ">&nbsp;Coverage Information</h3>
-          <p class="font-semibold ...">
-                Accident Count:  ${this.crashsites.length} </p>
-            <p class="font-semibold ...">Period: 
-                ${ datePipe.transform(startDate,"yyyy-MM-dd")} to ${datePipe.transform(EndDate,"yyyy-MM-dd")}  </p>
-            <p class="font-semibold ...">Total Estimated Damage: 
-                ${(new CurrencyPipe('en-US')).transform(totalEstimatedCost, '')} </p>
-            <p class="font-semibold ...">Area Covered(SqKm): 
-                ${(new DecimalPipe('en-US')).transform(this.rectangleArea, '1.2-2')} </p>
-            <p class="font-semibold ...">Incident Occurence(per SqKm): 
-                ${(new DecimalPipe('en-US')).transform(this.crashsites.length/this.rectangleArea, '1.2-2')} </p>      
-            <p class="font-semibold ...">Rating:    ${rating} </p>
-                
+          `<h3 class="font-bold bg-gray-500 text-white " align="center">&nbsp;Coverage Information</h3>
+ 
+            <table>
+            <thead>
+                <tr>
+                    <th><hr></th>
+                    <th><hr></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Accident Count</td>
+                    <td class="font-semibold ...">  
+                     ${this.crashsites.length}</td>
+                </tr>
+               
+                <tr>
+                    <td>Period</td>
+                    <td class="font-semibold ...">  
+                    ${ datePipe.transform(startDate,"yyyy-MM-dd")} to ${datePipe.transform(EndDate,"yyyy-MM-dd")}  </td>
+                </tr>
+                <tr>
+                <td>Range Damage</td>
+                <td class="font-semibold ...">  
+                ${(new CurrencyPipe('en-US')).transform(lowestAmount, '')} - ${(new CurrencyPipe('en-US')).transform(maxAmount, '')}  </td>
+            </tr>
+                <tr>
+                    <td>Total Estimated Damage</td>
+                    <td class="font-semibold ..."> 
+                    ${(new CurrencyPipe('en-US')).transform(totalEstimatedCost, '')}</td>
+                </tr>
+                <tr>
+                    <td>Area Covered (SqKm)</td>
+                    <td class="font-semibold ..."> 
+                    ${(new DecimalPipe('en-US')).transform(this.rectangleArea, '1.2-2')} </td>
+                </tr>
+                <tr>
+                    <td>Incident Occurrence (per SqKm)</td>
+                    <td class="font-semibold ..."> 
+                    ${(new DecimalPipe('en-US')).transform(this.crashsites.length/this.rectangleArea, '1.2-2')}      </td>
+                </tr>
+                <tr>
+                    <td>Rating</td>
+                    <td class="font-semibold ...">  ${rating} </td>
+                </tr>
+            </tbody>
+        </table>
+
              `
       )
     }
@@ -354,7 +393,7 @@ export class SearchMapComponent  implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('Map dialog closed');
+      //console.log('Map dialog closed');
     });
   }
 }
