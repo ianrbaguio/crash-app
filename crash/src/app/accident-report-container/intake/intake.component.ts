@@ -46,7 +46,7 @@ export interface IPartyDetails {
   LastName: string;
   Address: string;
   Phone: string;
-  LicenseNumber: string;
+  License: string;
   Remarks: string;
 }
 
@@ -91,7 +91,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     LastName: '',
     Address: '',
     Phone: '',
-    LicenseNumber: '',
+    License: '',
     Remarks: '',
   };
 
@@ -145,7 +145,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.PartyFieldsGenerated = numberOfInputs > 0;
     if (numberOfInputs == 1 && this.dynamicParties.length == 0) {
       this.dynamicParties.push(
-        this.formBuilder.control('', Validators.required)
+        this.formBuilder.control('')
       );
       this.PartyFields.push({
         name: '',
@@ -158,7 +158,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       if (diff > 0) {
         {
           this.dynamicParties.push(
-            this.formBuilder.control('', Validators.required)
+            this.formBuilder.control('')
           );
           this.PartyFields.push({
             name: '',
@@ -230,6 +230,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     }
     this.submitted = true;
     const day: string = this.form.controls['TimeIncident'].value;
+
     const requestBody = {
       // HARDCORDING PARTIES FOR TESTING ONLY
       accidentId: 0,
@@ -241,24 +242,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       numberOfParties: 1,
       latitude: this.latitude,
       longitude: this.longitude,
-      parties: [
-        {
-          license: 'ABC123456',
-          lastname: 'Horton',
-          firstname: 'Tim',
-          address: '1234 127 Ave Edmonton AB',
-          phone: '780123456',
-          remarks: 'none',
-        },
-        {
-          license: 'XYZ123456',
-          lastname: 'Horton',
-          firstname: 'Tim',
-          address: '1234 127 Ave Edmonton AB',
-          phone: '780123456',
-          remarks: 'none',
-        },
-      ],
+      parties:  this.PartyFields.map(item=>item.PartyDetails),
     };
 
     this.crashservice.addAccident(requestBody).subscribe(
@@ -320,8 +304,15 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.UploadComponents.forEach((uc) => {
       uc.clearImage();
     });
+
+    this.dynamicParties.clear()
+    this.PartyFields=[];
+    this.setDefaultInputs()
+    this.generatePartyFields()
   }
 
+
+  
   openPartyDialog(i: number, m_data: any): void {
     if (this.PartyFields[i]?.PartyDetails == null)
       this.PartyFields[i].PartyDetails = this.PartyDetails;
@@ -336,7 +327,8 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.PartyFields[i].PartyDetails = <IPartyDetails>result;
       this.PartyFields[i].name = result.firstName + ' ' + result.lastName;
-      this.PartyFields[i].value = result.firstName + result.lastName + i;
+      this.PartyFields[i].value = result.firstName +  result.lastName + i;
+    
     });
   }
 }
