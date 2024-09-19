@@ -238,7 +238,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       longitude: this.longitude,
       parties:  this.PartyFields.map(item=>item.PartyDetails),
     };
-
+    
     this.crashservice.addAccident(requestBody).subscribe(
       (res: any) => {
         try {
