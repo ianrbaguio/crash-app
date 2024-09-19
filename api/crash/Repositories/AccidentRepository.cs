@@ -138,6 +138,15 @@ namespace Crash.Repositories
          return images;
 
       }
-   }
+
+        public Task<List<Party>> GetAccidentPartiesAsync(Guid accidentId)
+        {
+
+            var parties = _dbContext.party_details.Where(a =>
+                    (a.AccidentId == accidentId)).ToListAsync();
+            return parties;
+
+        }
+    }
 
 }
