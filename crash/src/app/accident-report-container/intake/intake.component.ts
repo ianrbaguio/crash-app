@@ -40,15 +40,9 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { IPartyDetails } from '../../../shared/iparty-details';
 
-export interface IPartyDetails {
-  FirstName: string;
-  LastName: string;
-  Address: string;
-  Phone: string;
-  License: string;
-  Remarks: string;
-}
+
 
 @Component({
   selector: 'crash-intake',
