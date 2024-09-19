@@ -43,6 +43,8 @@ export class SearchMapComponent  implements OnInit {
  rectangle!: google.maps.Rectangle
  crashsites: IAccident[]  = []
  rectangleArea!: any
+ boundaryAddress1:string =""
+ boundaryAddress2:string =""
  constructor(private crashservice:CrashService,private dialog: MatDialog ) { }
 
   loadAPIMapscript() {
@@ -90,6 +92,7 @@ export class SearchMapComponent  implements OnInit {
       const rectangle = this.defineMapRectangle();
       this.rectangle= rectangle;
       this.defineDocumentElements(rectangle);
+      this.getAreaBoundaryAddress()
     }
     catch (e) { }
 
@@ -140,7 +143,9 @@ export class SearchMapComponent  implements OnInit {
     // listen to changes
     ["bounds_changed", "dragstart", "drag", "dragend",].forEach((eventName) => {
       rectangle.addListener(eventName, () => {
-      
+        if (eventName.toString()=="bounds_changed"){     
+          this.getAreaBoundaryAddress()
+        }
       });
     });
     return rectangle;
@@ -200,10 +205,44 @@ export class SearchMapComponent  implements OnInit {
         }
         this.markers = [];
        this.infowindow?.close()
-   
   }
   processMarkers(){
+   
     this.getAccidentsWithinRectangle() 
+  }
+
+  getAreaBoundaryAddress(){
+
+    let northwest:google.maps.LatLngLiteral =   {
+      lat: this.rectangle.getBounds()?.toJSON().north!,
+      lng:this.rectangle.getBounds()?.toJSON().west!
+    }
+
+    let southeast:google.maps.LatLngLiteral =   {
+      lat: this.rectangle.getBounds()?.toJSON().south!,
+      lng:this.rectangle.getBounds()?.toJSON().east!
+    }
+     this.crashservice.getInfoFromAddress(northwest).then((response) => {   
+      if (response.results[0]) {
+        this.boundaryAddress1=response.results[0].formatted_address;
+        
+      } else {
+        window.alert("No results found");
+     
+      }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e));
+   
+    this.crashservice.getInfoFromAddress(southeast).then((response) => {
+      if (response.results[0]) {
+        this.boundaryAddress2= response.results[0].formatted_address;
+       
+      } else {
+        window.alert("No results found");
+      }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e)); 
+   
   }
 
   getContentInfo(){
@@ -229,7 +268,9 @@ export class SearchMapComponent  implements OnInit {
       
       return (
           `<h3 class="font-bold bg-gray-500 text-white " align="center">&nbsp;Coverage Information</h3>
- 
+            <p class="font-semibold ..."> Region bound in quadrant</p>
+              <p>NorthWest at  ${this.boundaryAddress1} </p>
+              <p>SouthEast at ${this.boundaryAddress2} </p>
             <table>
             <thead>
                 <tr>
