@@ -111,17 +111,16 @@ export class MapComponent implements OnInit {
   }
   collectInformation() {
 
-    this.getWeather();
-    this.getInfoFromAddress(this.center);
+    this.setWeather();
+    this.setInfoFromAddress(this.center);
  
     //this.searchNearLandmark(this.center); -- placesAPI is call spits cross-origin error
   }
 
-  getInfoFromAddress(latlng: any) {
-
-    let geocoder = new google.maps.Geocoder();
+  setInfoFromAddress(latlng: any) {
     let infowindow = new google.maps.InfoWindow();
-    geocoder.geocode({ location: latlng })
+
+    this.crashservice.getInfoFromAddress(latlng)
       .then((response) => {
         if (response.results[0]) {
 
@@ -154,7 +153,7 @@ export class MapComponent implements OnInit {
 
   }
     
-  getWeather() {
+  setWeather() {
 
     const radius = 1000;
     this.crashservice.getWeather(this.center.lat, this.center.lng, radius)

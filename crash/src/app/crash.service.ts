@@ -54,6 +54,14 @@ getNearbyPlaces(latitude: number, longitude: number)  {
     return this.http.get(`${environment.Crash_API_Endpoint}/api/Accidents/images?accidentid=${accidentid}`)
   }
 
+  getInfoFromAddress(latlng: any) {
+
+    let geocoder = new google.maps.Geocoder();
+    return geocoder.geocode({ location: latlng })
+      
+
+  }
+  
 }
 
 

@@ -3,6 +3,8 @@ using Crash.Models.Dtos;
 using MediatR;
 using Crash.Repositories.IRepositories;
 using AutoMapper;
+using Crash.Models.Entities;
+using System.IO;
 
 namespace Crash.Query.Handlers
 {
@@ -41,11 +43,19 @@ namespace Crash.Query.Handlers
         public async Task<AccidentDto> Handle(GetAccidentByIdQuery query, CancellationToken cancellationToken)
 
         {
-            List<AccidentDto> data = new List<AccidentDto>();
-
+  
             var accidents = await _accidentRepository.GetAccidentByIdAsync(query.Id);
 
-            return _mapper.Map<AccidentDto>(accidents);
+            AccidentDto data = _mapper.Map<AccidentDto>(accidents);
+            List<Party> parties = await _accidentRepository.GetAccidentPartiesAsync(query.Id);
+            if (parties != null)
+            {
+               data.parties = new List<PartyDetailDto>();
+               foreach(var party in parties) 
+                    data.parties.Add(_mapper.Map<PartyDetailDto>(party));
+            }
+           
+            return data;
         }
     }
  

@@ -34,7 +34,7 @@ export interface IPartyDetails {
   lastName: '';
   address: '';
   phone: '';
-  licenseNumber: '';
+  license: '';
   remarks: '';
 }
 @Component({
@@ -74,7 +74,7 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
       lastName: this.form.controls['lastName'].value,
       address: this.form.controls['address'].value,
       phone: this.form.controls['phone'].value,
-      licenseNumber: this.form.controls['licenseNumber'].value,
+      license: this.form.controls['licenseNumber'].value,
       remarks: this.form.controls['remarks'].value,
     };
 
@@ -98,7 +98,7 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
     this.form.controls['lastName'].setValue(this.data.lastName);
     this.form.controls['address'].setValue(this.data.address);
     this.form.controls['phone'].setValue(this.data.phone);
-    this.form.controls['licenseNumber'].setValue(this.data.licenseNumber);
+    this.form.controls['licenseNumber'].setValue(this.data.license);
     this.form.controls['remarks'].setValue(this.data.remarks);
   }
   onNoClick(): void {

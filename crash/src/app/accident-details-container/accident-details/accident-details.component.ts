@@ -15,15 +15,8 @@ import { SearchMapComponent } from "../../view-accidents-container/view-map-acci
 import {AccidentMapComponent} from '../accident-mapdetails/accidentmap.component'
 import { delay } from 'rxjs/operators'; // For simulating an API delay
 import {MatTableModule, MatTableDataSource} from '@angular/material/table';
-
-interface PartyModel{
-  lastName: string,
-  firstName: string,
-  address: string,
-  phone: string,
-  license: string,
-  remarks: string,
-}
+import { IPartyDetails } from '../../../shared/iparty-details';
+ 
 @Component({
   selector: 'crash-accident-details',
 
@@ -40,7 +33,7 @@ export class AccidentDetailsComponent implements OnInit {
   imagesa: Array<object> = [];
   imagengx: Array<string> = [];
   displayedColumns: string[] = ['lastName', 'firstName', 'address', 'phone', 'license', 'remarks']; 
-  dataSource1!: MatTableDataSource<PartyModel>;
+  dataSource1!: MatTableDataSource<IPartyDetails>;
 
   form : FormGroup = new FormGroup({
     DateIncident: new FormControl(new Date()),
@@ -75,7 +68,7 @@ ngOnInit() :void{
         const [date, time] = parsed.accidentDate.split("T");
          this.form.controls['DateIncident'].setValue(date ) ;
          this.form.controls['TimeIncident'].setValue(this.formatTime(parsed.accidentDate) ) ;
-         this.dataSource1 = new MatTableDataSource(<PartyModel[]> parsed.parties);
+         this.dataSource1 = new MatTableDataSource(<IPartyDetails[]> parsed.parties);
          this.form.controls['NumPartiesInvolved'].setValue(parsed.numberOfParties ) ;
          this.form.controls['Location'].setValue(parsed.location) ;
          this.form.controls['WeatherConditions'].setValue(parsed.weather ) ;
