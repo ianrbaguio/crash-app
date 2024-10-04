@@ -50,9 +50,8 @@ namespace Crash.Query.Handlers
             List<Party> parties = await _accidentRepository.GetAccidentPartiesAsync(query.Id);
             if (parties != null)
             {
-               data.parties = new List<PartyDetailDto>();
-               foreach(var party in parties) 
-                    data.parties.Add(_mapper.Map<PartyDetailDto>(party));
+               data.parties = _mapper.Map<List<PartyDetailDto>>(parties);
+               
             }
            
             return data;

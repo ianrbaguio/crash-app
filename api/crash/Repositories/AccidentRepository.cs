@@ -104,11 +104,6 @@ namespace Crash.Repositories
 
          var accidents = await _dbContext.accident.ToListAsync();
 
-         foreach (var accident in accidents)
-         {
-            var parties = await _dbContext.party_details.Where(e => e.AccidentId == accident.Id).ToListAsync();
-         }
-
          return accidents;
       }
 

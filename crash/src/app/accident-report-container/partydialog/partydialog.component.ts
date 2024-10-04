@@ -59,10 +59,10 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
   form: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    phone: new FormControl(''),
+    address: new FormControl(''),
+    phone: new FormControl('', [Validators.required]),
     licenseNumber: new FormControl('', [Validators.required]),
-    remarks: new FormControl('', [Validators.required]),
+    remarks: new FormControl(''),
   });
   result!: IPartyDetails;
 
