@@ -226,7 +226,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     const day: string = this.form.controls['TimeIncident'].value;
 
     const requestBody = {
-      // HARDCORDING PARTIES FOR TESTING ONLY
+ 
       accidentId: 0,
       location: this.form.controls['Location'].value,
       accidentDate: this.form.controls['DateIncident'].value,
@@ -314,7 +314,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px',
-      height: '450px',
+      height: '535px',
       data: m_data,
     });
 

@@ -1,10 +1,11 @@
+<br>
 <div mat-dialog-title class="dialog-title">
-  <h2>Party Details Information</h2>
+  <h1 mat-dialog-title>Party Details Information</h1>
   <button mat-icon-button aria-label="close dialog" mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
 </div>
-
+<hr>
 <mat-dialog-content>
   <form name="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="shadow-xl">
@@ -16,16 +17,15 @@
           >
             First Name
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="firstName"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="firstName"
             />
-          </div>
-          @if (form.controls['firstName'].errors) {
-          <span>* Required </span>
-          }
+       
+          <span [hidden]="!form.controls['firstName'].errors">* Required </span>
+            </div>
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -35,16 +35,15 @@
           >
             Last Name
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="lastName"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="lastName"
             />
-          </div>
-          @if (form.controls['lastName'].errors) {
-          <span>* Required </span>
-          }
+          
+          <span [hidden]="!form.controls['lastName'].errors">* Required </span>
+    </div>
         </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
@@ -53,16 +52,15 @@
           >
             Address
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="address"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="address"
             />
-          </div>
-          @if (form.controls['address'].errors) {
-          <span>* Required </span>
-          }
+          </div>  
+
+   
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -72,17 +70,16 @@
           >
             Phone
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="phone"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="phone"
             />
-          </div>
-          @if (form.controls['phone'].errors) {
-
-          <span>* Required </span>
-          }
+       
+ 
+          <span [hidden]="!form.controls['phone'].errors">* Required </span>
+        </div>
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -92,16 +89,16 @@
           >
             Driver License #
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="licenseNumber"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="licenseNumber"
             />
-          </div>
-          @if (form.controls['licenseNumber'].errors) {
-          <span>* Required </span>
-          }
+         
+     
+          <span [hidden]="!form.controls['licenseNumber'].errors">* Required </span>
+        </div>
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -111,17 +108,14 @@
           >
             Remarks
           </label>
-          <div>
+          <div class="h-20">
             <input
               name="remarks"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="remarks"
             />
           </div>
-          @if (form.controls['remarks'].errors) {
-
-          <span>* Required </span>
-          }
+    
         </div>
       </div>
     </div>
@@ -132,16 +126,18 @@
       (click)="onSubmit()"
   >Save</button> -->
   </div>
-  <mat-dialog-actions>
+</mat-dialog-content>
+  <mat-dialog-actions align="center">
     <button
-      mat-button
+      mat-button mat-dialog-close
       class="text-sm font-semibold leading-6 text-gray-900"
       (click)="onNoClick()"
     >
       Cancel
     </button>
+    &nbsp; &nbsp; &nbsp; &nbsp;
     <button
-      mat-button
+      mat-button  
       class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       cdkFocusInitial
       (click)="onSubmit()"
@@ -149,4 +145,4 @@
       Save
     </button>
   </mat-dialog-actions>
-</mat-dialog-content>
+
