@@ -1,22 +1,56 @@
-
-<div id="info" class="flex justify-center ...">
-  <div > <b>Collision Reporting Application </b></div>
+<div id="info" class="flex justify-center py-8">
+  <div><b>Collision Reporting Application </b></div>
 </div>
 
 <mat-grid-list cols="2" rowHeight="150px" gutterSize="10px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <div style="margin: 10rem;  width: 100%; height: 100%; background-color: rgba(177, 174, 174, 0.2); text-align: center;">    
-    <h3>Have you Witnessed an Accident?</h3>
-    <!--<p><a mat-stroked-button routerLink="/reporting">Report</a></p>-->
-    <p><button mat-raised-button color="primary" routerLink="/reporting"id ="btn_report">Report</button></p>
+    <div
+      class="p-4"
+      style="
+        margin: 10rem;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(177, 174, 174, 0.2);
+        text-align: center;
+      "
+    >
+      <h3>Have you Witnessed an Accident?</h3>
+      <!--<p><a mat-stroked-button routerLink="/reporting">Report</a></p>-->
+      <p>
+        <button
+          mat-raised-button
+          color="primary"
+          routerLink="/reporting"
+          id="btn_report"
+        >
+          Report
+        </button>
+      </p>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <div style="margin: 10rem;  width: 100%; height: 100%; background-color: rgba(177, 174, 174, 0.2); text-align: center;">    
-    <h3>Are you in a personnel emergency?</h3>
-    <p><button mat-raised-button color="primary" routerLink="/viewaccidents" id="btn_view">View</button></p>
+    <div
+      class="p-4"
+      style="
+        margin: 10rem;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(177, 174, 174, 0.2);
+        text-align: center;
+      "
+    >
+      <h3>Are you in a personnel emergency?</h3>
+      <p>
+        <button
+          mat-raised-button
+          color="primary"
+          routerLink="/viewaccidents"
+          id="btn_view"
+        >
+          View
+        </button>
+      </p>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
-
