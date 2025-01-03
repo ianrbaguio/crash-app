@@ -126,18 +126,7 @@
           />
         </div>
 
-        <div class="form-group">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="numberparties"
-            >Number of Parties Involved</label
-          >
-          <input
-            type="text"
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="numberparties"
-            formControlName="NumPartiesInvolved"
-          />
+        <div>          
         </div>
       </div>
 
@@ -145,9 +134,15 @@
         <label
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
           for="party"
-          >Party</label
+          >Party Details</label
         >
         <mat-table [dataSource]="dataSource1">
+
+          <ng-container matColumnDef="partyNo">
+            <mat-header-cell *matHeaderCellDef> Party </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</mat-cell> 
+          </ng-container>
+
           <ng-container matColumnDef="lastName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Last Name
@@ -197,6 +192,22 @@
             >
             <mat-cell *matCellDef="let element">
               {{ element.remarks }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="insuranceProvider">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Insurance Provider
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.insuranceProvider }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="insuranceNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Insurance Number
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.insuranceNumber }}
             </mat-cell>
           </ng-container>
 

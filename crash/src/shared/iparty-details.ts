@@ -5,4 +5,6 @@ export interface IPartyDetails {
     Phone: string;
     License: string;
     Remarks: string;
+    InsuranceProvider: string;
+    InsuranceNumber: string;
   }

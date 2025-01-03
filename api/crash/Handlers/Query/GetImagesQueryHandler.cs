@@ -25,8 +25,8 @@ namespace Crash.Query.Handlers
           
             var images = await _accidentRepository.GetImagesByAccidentIdAsync(query.AccidentId);
 
-             if (images!=null){
-                aImageDto.AccidentId = images[0].AccidentId;
+             if (images!=null &&  images.Count > 0){
+                //aImageDto.AccidentId = images[0].AccidentId;
                 foreach (var img in images){
                     imglist.Add(img.ImageData);
                 }

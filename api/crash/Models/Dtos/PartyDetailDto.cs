@@ -12,5 +12,8 @@
 
         public string Phone { get; set; }
         public string Remarks { get; set; }
+        public string InsuranceProvider { get; set; }
+        public string InsuranceNumber { get; set; }
+  
     }
 }
