@@ -129,7 +129,10 @@
               name="insuranceNumber"
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="insuranceNumber"
-            /> 
+            />
+            <button *ngIf="form.get('insuranceNumber')?.value.trim().length > 0" type="button"
+              (click)="this.crashservice.speakText(form.get('insuranceNumber')?.value)"
+              class="bg-blue-500 text-white  py-1 px-2 rounded hover:bg-blue-600 focus:outline-none">🎙️ Speak</button> 
           <span [hidden]="!form.controls['insuranceNumber'].errors">* Required </span>
         </div>
         </div>

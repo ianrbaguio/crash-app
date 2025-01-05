@@ -323,7 +323,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px',
-      height: '535px',
+      height: '635px',
       data: m_data,
     });
 

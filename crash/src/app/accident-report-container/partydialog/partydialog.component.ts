@@ -17,6 +17,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common'; 
+import { CrashService } from '../../crash.service';
 import {
   MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
@@ -53,6 +55,7 @@ export interface IPartyDetails {
     MatDialogTitle,
     MatDialogContent,
     ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './partydialog.component.html',
   styleUrl: './partydialog.component.scss',
@@ -87,7 +90,8 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
     this.dialogRef.close(this.result);
   }
 
-  constructor(
+  constructor( 
+    public crashservice: CrashService,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<PartydialogComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -111,5 +115,5 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
   }
   onNoClick(): void {
     this.dialogRef.close();
-  }
+  }  
 }
