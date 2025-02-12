@@ -6,6 +6,8 @@ import {
   ViewChildren,
   Inject,
   AfterViewInit,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 
 import { CommonModule, DatePipe } from '@angular/common';
@@ -41,7 +43,8 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { IPartyDetails } from '../../../shared/iparty-details';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -50,7 +53,6 @@ import { IPartyDetails } from '../../../shared/iparty-details';
   providers: [provideNativeDateAdapter(), DatePipe],
   imports: [
     CommonModule,
-    RouterOutlet,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
@@ -59,16 +61,15 @@ import { IPartyDetails } from '../../../shared/iparty-details';
     MapComponent,
     UploadComponent,
     MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
+
   ],
   templateUrl: './intake.component.html',
   styleUrl: './intake.component.scss',
 })
 export class IntakeComponent implements OnInit, AfterViewInit {
   @ViewChildren(UploadComponent) UploadComponents!: QueryList<UploadComponent>;
+  @ViewChild('previewRef', { static: false }) previewRef!: ElementRef;
+  @ViewChild('previewRef2', { static: false }) previewRef2!: ElementRef;
 
   form: FormGroup = new FormGroup({
     DateIncident: new FormControl(new Date(), [Validators.required]),
@@ -93,6 +94,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   PartyFields: { name: string; value: string; PartyDetails: IPartyDetails }[] =
     [];
   WeatherIcon: string = '';
+  Image0: any;
   Image1: any;
   Image2: any;
   Image3: any;
@@ -100,7 +102,8 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   longitude: any;
   location: string = '';
   weatherconditions: string = '';
-
+  eventData: string = '';
+  streetview: any;
   submitted = false;
   smallscreen: boolean = false;
 
@@ -110,8 +113,9 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private crashservice: CrashService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.setDefaultInputs();
@@ -131,6 +135,12 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       datePipe.transform(new Date(), 'h:mm a')
     );
     this.form.controls['NumPartiesInvolved'].setValue(1);
+    this.Image0=null;
+    this.Image1=null;
+    this.Image2=null;
+    this.Image3=null;
+    this.streetview=null;
+    
   }
 
   generatePartyFields() {
@@ -179,9 +189,13 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   setWeatherIcon(theweathericon: any) {
     this.WeatherIcon = theweathericon;
   }
+  setEventData(data: any) {
+    this.eventData = data;
 
+  }
   setImage1(img: any) {
     this.Image1 = img;
+    console.log(this.Image1);
   }
   setImage2(img: any) {
     this.Image2 = img;
@@ -193,8 +207,39 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.longitude = latlng.lng;
     this.latitude = latlng.lat;
   }
+  setDefaultImages(view: any) {
+
+    const reader = new FileReader();
+    reader.readAsDataURL(view);
+    reader.onload = () => {
+      if (this.previewRef && this.previewRef.nativeElement) {
+        this.previewRef.nativeElement.src = reader.result as string;
+      }
+    };
+    const file = new File([view], 'default-image.png', {
+      type: 'image/png',
+      lastModified: Date.now()
+    });
+    this.streetview = file;
+    this.previewRef2.nativeElement.src = `https://maps.geoapify.com/v1/staticmap?style=osm-bright&width=600&height=400&center=lonlat:${this.longitude},${this.latitude}&zoom=18&marker=lonlat:${this.longitude},${this.latitude};type:awesome;color:%2319b8fc;size:large&scaleFactor=2&apiKey=${environment.Geoapify_API_KEY}`;
+
+    this.http.get(this.previewRef2.nativeElement.src, { responseType: 'blob' })
+    .subscribe({
+      next: (blob: Blob) => {
+        this.Image0 = new File([blob], 'file2.png', { type: 'image/png', lastModified: Date.now() });
+      },
+      error: error => {
+        console.error('Error fetching image as blob:', error);
+      }
+    });
+  
+
+  }
+
   getImages() {
     let images: any[] = [];
+    if (this.streetview != null) images.push(this.streetview);
+    if (this.Image0 != null) images.push(this.Image0);
     if (this.Image1 != null) images.push(this.Image1);
     if (this.Image2 != null) images.push(this.Image2);
     if (this.Image3 != null) images.push(this.Image3);
@@ -204,7 +249,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.crashservice
       .getAccidents()
       .pipe(
-        map((response) => {}),
+        map((response) => { }),
         catchError((error) => {
           throw error;
         })
@@ -225,8 +270,9 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.submitted = true;
     const day: string = this.form.controls['TimeIncident'].value;
 
+
     const requestBody = {
- 
+
       accidentId: 0,
       location: this.form.controls['Location'].value,
       accidentDate: this.form.controls['DateIncident'].value,
@@ -236,11 +282,12 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       numberOfParties: 1,
       latitude: this.latitude,
       longitude: this.longitude,
-      parties:  this.PartyFields.map(item=>item.PartyDetails),
+      parties: this.PartyFields.map(item => item.PartyDetails),
+      eventData: this.eventData
     };
-    
-    this.crashservice.addAccident(requestBody).subscribe(
-      (res: any) => {
+
+    this.crashservice.addAccident(requestBody).subscribe({
+      next: (res: any) => {
         try {
           const jsonResponse = JSON.parse(res);
 
@@ -252,11 +299,13 @@ export class IntakeComponent implements OnInit, AfterViewInit {
           console.log('Non-JSON response:');
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Request failed', error);
       }
-    );
+    });
   }
+
+
   uploadImages(accident_id: string): void {
     const formData = new FormData();
     this.getImages().forEach((element) => {
@@ -294,19 +343,21 @@ export class IntakeComponent implements OnInit, AfterViewInit {
         input.value = '';
       }
     });
+    this.form.reset();
     this.setDefaultInputs();
     this.UploadComponents.forEach((uc) => {
       uc.clearImage();
     });
-
+    this.previewRef.nativeElement.src = '';
+    this.previewRef2.nativeElement.src = '';
     this.dynamicParties.clear()
-    this.PartyFields=[];
+    this.PartyFields = [];
     this.setDefaultInputs()
     this.generatePartyFields()
   }
 
 
-  
+
   openPartyDialog(i: number, m_data: any): void {
     if (this.PartyFields[i]?.PartyDetails == null)
       this.PartyFields[i].PartyDetails = this.PartyDetails;
@@ -321,8 +372,9 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.PartyFields[i].PartyDetails = <IPartyDetails>result;
       this.PartyFields[i].name = result.firstName + ' ' + result.lastName;
-      this.PartyFields[i].value = result.firstName +  result.lastName + i;
-    
+      this.PartyFields[i].value = result.firstName + result.lastName + i;
+
     });
   }
 }
+

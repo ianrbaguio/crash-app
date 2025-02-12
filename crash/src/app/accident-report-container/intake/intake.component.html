@@ -148,6 +148,8 @@
           (m_address)="setAddress($event)"
           (m_weathericon)="setWeatherIcon($event)"
           (m_latng)="setLatlng($event)"
+          (m_streetview)="setDefaultImages ($event)"
+          (m_eventdata)="setEventData($event)"
         >
         </crash-map>
       </div>
@@ -181,6 +183,14 @@
           Accident Images
         </label>
         <div class="form-group">
+          <div>
+            <img #previewRef  class="preview" />
+          </div>
+          <br>
+          <div>
+            <img #previewRef2  class="preview" />
+          </div>
+          <br>
           <crash-upload-images
             (m_image)="setImage1($event)"
           ></crash-upload-images>
