@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\crash",
+    "\\crash\\Controllers",
+    "\\crash\\Database",
+    "\\crash\\Handlers",
+    "\\crash\\Misc",
+    "\\crash\\Models",
+    "\\crash\\Properties",
+    "\\crash\\Queries",
+    "\\crash\\Repositories"
+  ],
+  "SelectedNode": "\\crash\\appsettings.Development.json",
+  "PreviewInSolutionExplorer": false
+}
