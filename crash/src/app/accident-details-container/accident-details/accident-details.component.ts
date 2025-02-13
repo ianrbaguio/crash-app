@@ -32,7 +32,7 @@ export class AccidentDetailsComponent implements OnInit {
   thumbnail: any;
   imagesa: Array<object> = [];
   imagengx: Array<string> = [];
-  displayedColumns: string[] = ['lastName', 'firstName', 'address', 'phone', 'license', 'remarks']; 
+  displayedColumns: string[] = ['partyNo','lastName', 'firstName', 'address', 'phone', 'license', 'remarks','insuranceProvider','insuranceNumber']; 
   dataSource1!: MatTableDataSource<IPartyDetails>;
 
   form : FormGroup = new FormGroup({

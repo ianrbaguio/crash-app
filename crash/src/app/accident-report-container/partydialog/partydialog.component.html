@@ -23,7 +23,6 @@
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="firstName"
             />
-       
           <span [hidden]="!form.controls['firstName'].errors">* Required </span>
             </div>
         </div>
@@ -114,6 +113,44 @@
               class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               formControlName="remarks"
             />
+          </div>
+    
+        </div>
+
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="insuranceNumber"
+           >
+            Insurance #
+          </label>
+          <div class="h-20">
+            <input
+              name="insuranceNumber"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              formControlName="insuranceNumber"
+            />
+            <button *ngIf="form.get('insuranceNumber')?.value.trim().length > 0" type="button"
+              (click)="this.crashservice.speakText(form.get('insuranceNumber')?.value)"
+              class="bg-blue-500 text-white  py-1 px-2 rounded hover:bg-blue-600 focus:outline-none">🎙️ Speak</button> 
+          <span [hidden]="!form.controls['insuranceNumber'].errors">* Required </span>
+        </div>
+        </div>
+
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
+            for="insuranceProvider"
+          >
+            Insurance Provider
+          </label>
+          <div class="h-20">
+            <input
+              name="insuranceProvider"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              formControlName="insuranceProvider"
+            />
+            <span [hidden]="!form.controls['insuranceProvider'].errors">* Required </span>
           </div>
     
         </div>

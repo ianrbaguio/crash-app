@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS public.accident
     "EstimatedCost" double precision NOT NULL,
     "NumberOfParties" integer NOT NULL,
     "Parties" text[] COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
     CONSTRAINT "PK_Accidents" PRIMARY KEY ("Id")
 )
 
@@ -76,6 +77,8 @@ CREATE TABLE IF NOT EXISTS public.party_details
     "AccidentId" uuid,
     "Phone" text COLLATE pg_catalog."default" DEFAULT ''::text,
     "Remarks" text COLLATE pg_catalog."default" DEFAULT ''::text,
+    "InsuranceNumber" text COLLATE pg_catalog."default" DEFAULT ''::text,
+    "InsuranceProvider" text COLLATE pg_catalog."default" DEFAULT ''::text,
     CONSTRAINT parties_pkey PRIMARY KEY ("PartyId")
 )
 

@@ -18,6 +18,8 @@ namespace Crash.Models.Dtos
         public double Longitude { get; set; }
 
         public List<PartyDetailDto> parties { get; set; }
+
+        public string Description { get; set; }
         
     }
 }

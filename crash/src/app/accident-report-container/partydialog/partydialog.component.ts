@@ -17,6 +17,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common'; 
+import { CrashService } from '../../crash.service';
 import {
   MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
@@ -36,6 +38,8 @@ export interface IPartyDetails {
   phone: '';
   license: '';
   remarks: '';
+  insuranceProvider:'';
+  insuranceNumber:'';
 }
 @Component({
   selector: 'crash-partydialog',
@@ -51,6 +55,7 @@ export interface IPartyDetails {
     MatDialogTitle,
     MatDialogContent,
     ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './partydialog.component.html',
   styleUrl: './partydialog.component.scss',
@@ -63,6 +68,8 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
     phone: new FormControl('', [Validators.required]),
     licenseNumber: new FormControl('', [Validators.required]),
     remarks: new FormControl(''),
+    insuranceProvider: new FormControl('', [Validators.required]),
+    insuranceNumber: new FormControl('', [Validators.required])
   });
   result!: IPartyDetails;
 
@@ -76,12 +83,15 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
       phone: this.form.controls['phone'].value,
       license: this.form.controls['licenseNumber'].value,
       remarks: this.form.controls['remarks'].value,
+      insuranceProvider: this.form.controls['insuranceProvider'].value,
+      insuranceNumber: this.form.controls['insuranceNumber'].value
     };
 
     this.dialogRef.close(this.result);
   }
 
-  constructor(
+  constructor( 
+    public crashservice: CrashService,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<PartydialogComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -100,8 +110,10 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
     this.form.controls['phone'].setValue(this.data.phone);
     this.form.controls['licenseNumber'].setValue(this.data.license);
     this.form.controls['remarks'].setValue(this.data.remarks);
+    this.form.controls['insuranceProvider'].setValue(this.data.insuranceProvider);
+    this.form.controls['insuranceNumber'].setValue(this.data.insuranceNumber);
   }
   onNoClick(): void {
     this.dialogRef.close();
-  }
+  }  
 }

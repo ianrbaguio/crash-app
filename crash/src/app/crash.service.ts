@@ -61,6 +61,16 @@ getNearbyPlaces(latitude: number, longitude: number)  {
       
 
   }
+
+  //Use client side SpeechSynthesis to speak text
+  speakText(value: any): void {
+    if ('speechSynthesis' in window) {
+      const inputText = new SpeechSynthesisUtterance(value);
+      speechSynthesis.speak(inputText);
+    } else {
+      alert("Sorry, your browser doesn't support text-to-speech.");
+    }
+  }
   
 }
 
