@@ -19,7 +19,11 @@ namespace Crash.Models.Entities
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
+ 
         public string EventData { get; set; }
+ 
+        public string? Description { get; set; }
+ 
  
     }
 }

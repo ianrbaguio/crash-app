@@ -79,6 +79,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     EstimateCost: new FormControl('', [Validators.required]),
     NumPartiesInvolved: new FormControl(),
     dynamicParties: this.formBuilder.array([]),
+    AccidentDesc: new FormControl()
   });
 
   PartyDetails: IPartyDetails = {
@@ -88,6 +89,8 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     Phone: '',
     License: '',
     Remarks: '',
+    InsuranceNumber: '',
+    InsuranceProvider: ''
   };
 
   PartyFieldsGenerated: boolean = false;
@@ -102,8 +105,12 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   longitude: any;
   location: string = '';
   weatherconditions: string = '';
+
   eventData: string = '';
   streetview: any;
+  accidentdesc: string = ''  ;
+
+
   submitted = false;
   smallscreen: boolean = false;
 
@@ -190,9 +197,18 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.WeatherIcon = theweathericon;
   }
   setEventData(data: any) {
-    this.eventData = data;
 
+    if (data == null)   this.form.controls['AccidentDesc'].setValue("");
+    else {
+      this.eventData = data;
+      let edata = JSON.parse(data);
+      this.form.controls['AccidentDesc'].setValue("Street speed limit: " + edata.features[0].properties.legs[0].steps[0].speed_limit + " km/h\n" +
+          "Lane count: " + edata.features[0].properties.legs[0].steps[0].lane_count + "\n" +
+          "Traversability: " + edata.features[0].properties.legs[0].steps[0].traversability );     
+    }
+   
   }
+  
   setImage1(img: any) {
     this.Image1 = img;
     console.log(this.Image1);
@@ -208,7 +224,11 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     this.latitude = latlng.lat;
   }
   setDefaultImages(view: any) {
-
+    if (view === null) {
+      this.previewRef.nativeElement.src = "";
+      this.previewRef2.nativeElement.src = "";
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(view);
     reader.onload = () => {
@@ -269,8 +289,6 @@ export class IntakeComponent implements OnInit, AfterViewInit {
     }
     this.submitted = true;
     const day: string = this.form.controls['TimeIncident'].value;
-
-
     const requestBody = {
 
       accidentId: 0,
@@ -282,10 +300,11 @@ export class IntakeComponent implements OnInit, AfterViewInit {
       numberOfParties: 1,
       latitude: this.latitude,
       longitude: this.longitude,
-      parties: this.PartyFields.map(item => item.PartyDetails),
-      eventData: this.eventData
-    };
+      eventData: this.eventData,
+      parties:  this.PartyFields.map(item=>item.PartyDetails),
+      description: this.form.controls['AccidentDesc'].value
 
+    };
     this.crashservice.addAccident(requestBody).subscribe({
       next: (res: any) => {
         try {
@@ -365,7 +384,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(PartydialogComponent, {
       width: '800px',
-      height: '535px',
+      height: '635px',
       data: m_data,
     });
 

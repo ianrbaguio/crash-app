@@ -87,8 +87,8 @@ export class CrashService {
 
       return this.http.post(`${environment.Geoapify_API_Endpoint}v1/mapmatching?apiKey=${environment.Geoapify_API_KEY}`, requestBody, { responseType: 'text', headers: headers });
     } catch (error) {
-      console.error('Error fetching speed limit:', error);
-      throw error;
+        console.error('Error fetching speed limit:', error);
+        throw error;
     }
   }
 
@@ -119,9 +119,19 @@ export class CrashService {
 
   getInfoFromAddress(latlng: any) {
     let geocoder = new google.maps.Geocoder();
-    return geocoder.geocode({ location: latlng });
-  }
+    return geocoder.geocode({ location: latlng })
+      
 
+  }
+  //Use client side SpeechSynthesis to speak text
+  speakText(value: any): void {
+    if ('speechSynthesis' in window) {
+      const inputText = new SpeechSynthesisUtterance(value);
+      speechSynthesis.speak(inputText);
+    } else {
+      alert("Sorry, your browser doesn't support text-to-speech.");
+    }
+  }
   getCarModelByVin(vin: any) {
     return this.http.get(`${environment.CarVIN_API_Endpoint}${vin}`);
   }
@@ -135,3 +145,6 @@ export class CrashService {
     return this.http.post(`${environment.Crash_API_Endpoint}/api/accidents/mergeimages`, requestBody);
   }
 }
+ 
+
+

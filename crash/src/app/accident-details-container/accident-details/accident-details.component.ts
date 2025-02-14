@@ -21,8 +21,8 @@ import { IPartyDetails } from '../../../shared/iparty-details';
   selector: 'crash-accident-details',
 
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule,
-    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent, SearchMapComponent, MatTableModule],
+  imports: [CommonModule, ReactiveFormsModule,
+    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent,  MatTableModule],
     providers: [CrashService,CurrencyPipe ],
   templateUrl: './accident-details.component.html',
   styleUrl: './accident-details.component.scss'
@@ -32,7 +32,7 @@ export class AccidentDetailsComponent implements OnInit {
   thumbnail: any;
   imagesa: Array<object> = [];
   imagengx: Array<string> = [];
-  displayedColumns: string[] = ['lastName', 'firstName', 'address', 'phone', 'license', 'remarks']; 
+  displayedColumns: string[] = ['partyNo','lastName', 'firstName', 'address', 'phone', 'license', 'remarks','insuranceProvider','insuranceNumber']; 
   dataSource1!: MatTableDataSource<IPartyDetails>;
 
   form : FormGroup = new FormGroup({

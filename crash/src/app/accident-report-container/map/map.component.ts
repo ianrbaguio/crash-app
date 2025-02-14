@@ -80,8 +80,8 @@ export class MapComponent implements OnInit {
   @Output() m_address = new EventEmitter<string>();
   @Output() m_weathericon = new EventEmitter<string>();
   @Output() m_latng = new EventEmitter<google.maps.LatLngLiteral>();
-  @Output() m_eventdata = new EventEmitter<string>();
-  @Output() m_streetview = new EventEmitter<any>();
+  @Output() m_eventdata = new EventEmitter<string | null>();
+  @Output() m_streetview = new EventEmitter<any | null>();
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = (event.latLng.toJSON());
     if (event.latLng != null)
@@ -116,13 +116,12 @@ export class MapComponent implements OnInit {
 
     this.setWeather();
     this.setInfoFromAddress(this.center);
-    this.searchNearLandmark(this.center); //-- placesAPI is call spits cross-origin error
+    this.searchNearLandmark(this.center); 
     this.getSpeedLimit();  
   }
 
   setInfoFromAddress(latlng: any) {
     let infowindow = new google.maps.InfoWindow();
-
     this.crashservice.getInfoFromAddress(latlng)
       .then((response) => {
         if (response.results[0]) {
@@ -130,7 +129,6 @@ export class MapComponent implements OnInit {
           this.location = response.results[0].formatted_address;
           infowindow.setContent(response.results[0].formatted_address);
           this.m_address.emit(this.location);
-                // Get Street View image
           this.getStreetViewImage(latlng);
         } else {
           window.alert("No results found");
@@ -158,6 +156,7 @@ export class MapComponent implements OnInit {
         }
       } else {
         window.alert("Street View not available at this location.");
+        this.m_streetview.emit(null);
       }
     });
   }
@@ -174,18 +173,21 @@ private fetchAndStoreImage(url: string) {
     addresses.push(this.center);
     this.crashservice.getSpeedLimit(addresses).subscribe(
       (res: any) => {
-          this.eventData+= (res);
-    
-      });
+        this.eventData = res;
+        this.m_eventdata.emit(this.eventData);
+      },
+      (error: any) => {
+          console.error('Error 400: Bad Request', error);
+          this.m_eventdata.emit(null);     
+      }
+    );
 
   }
   searchNearLandmark(latlng: any) {
     this.crashservice.getNearbyPlacesV2(latlng.lat, latlng.lng)
       .subscribe(
-        (res: any) => {
-          
-            this.eventData+= JSON.stringify(res);
-            console.log(this.eventData);
+        (res: any) => {       
+           
         });
 
   }
@@ -207,7 +209,7 @@ private fetchAndStoreImage(url: string) {
              this.m_weather.emit(this.weatherconditions);
             this.m_weathericon.emit(this.WeatherData.weather[0].icon)
             this.m_latng.emit(this.center);
-            this.m_eventdata.emit(this.eventData);
+      
         });
 
 
