@@ -112,8 +112,6 @@ createGmapLATLANG(LAT:any, LNG:any){
         lng:LNG
     }
 
-    console.log("createGmapLATLANG"  )
-    //console.log(  this.center)
 }
 formatTime(time: string) {
   return new Date(time).toLocaleTimeString();

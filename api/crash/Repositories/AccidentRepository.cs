@@ -8,9 +8,7 @@ using Crash.Models.Dtos;
 using Crash.Repositories.IRepositories;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
-
 using System.Collections.Generic;
-using OpenCvSharp;
 using System.Drawing;
 using Image = Crash.Models.Entities.Image;
 
@@ -146,61 +144,7 @@ namespace Crash.Repositories
 
         }
 
-        public async Task<byte[]> MergeAccidentImagesAsync(List<IFormFile> streetViewImages, List<IFormFile> accidentImages)
-        {
-            List<Mat> streetViewMats = new List<Mat>();
-            List<Mat> accidentMats = new List<Mat>();
-
-            foreach (var img in streetViewImages)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await img.CopyToAsync(memoryStream);
-                    var imageData = memoryStream.ToArray();
-                    var mat = Mat.FromImageData(imageData, ImreadModes.Color);
-                    streetViewMats.Add(mat);
-                }
-            }
-
-            foreach (var img in accidentImages)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await img.CopyToAsync(memoryStream);
-                    var imageData = memoryStream.ToArray();
-                    var mat = Mat.FromImageData(imageData, ImreadModes.Color);
-                    accidentMats.Add(mat);
-                }
-            }
-
-            // Assuming the first image in each list is the primary image to merge
-            Mat streetViewImage = streetViewMats.First();
-            Mat accidentImage = accidentMats.First();
-
-            // Resize accident image to match street view image size
-            Cv2.Resize(accidentImage, accidentImage, new OpenCvSharp.Size(streetViewImage.Width, streetViewImage.Height));
-
-            // Merge images (simple overlay for demonstration purposes)
-            Mat mergedImage = new Mat();
-            Cv2.AddWeighted(streetViewImage, 0.5, accidentImage, 0.5, 0, mergedImage);
-
-            // Convert merged image to byte array
-            byte[] mergedImageData;
-            using (var ms = new MemoryStream())
-            {
-#if WINDOWS
-                Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mergedImage);
-                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-#else
-                mergedImageData = mergedImage.ToBytes(".png");
-                ms.Write(mergedImageData, 0, mergedImageData.Length);
-#endif
-                mergedImageData = ms.ToArray();
-            }
-
-            return mergedImageData;
-        }
-
+      
     }
 
 }

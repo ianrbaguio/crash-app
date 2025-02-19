@@ -211,7 +211,6 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   
   setImage1(img: any) {
     this.Image1 = img;
-    console.log(this.Image1);
   }
   setImage2(img: any) {
     this.Image2 = img;
@@ -282,7 +281,7 @@ export class IntakeComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(): void {
-    console.log(this.form);
+ 
     if (this.form.invalid) {
       console.log('Form contains invalid data');
       return;

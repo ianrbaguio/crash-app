@@ -93,24 +93,6 @@ namespace Crash.Controllers
          return imageDto;
       }
 
-        [HttpPost("mergeImages")]
-        public async Task<IActionResult> MergeAccidentImages([FromForm] IFormFile streetViewImage, [FromForm] List<IFormFile> accidentImages, [FromForm] Guid accidentId)
-        {
-            try
-            {
-                var mergedImage = await _mediatr.Send(new MergeAccidentImages
-                {
-                    StreetViewImage = streetViewImage,
-                    AccidentImages = accidentImages,
-                    AccidentId = accidentId
-                });
-
-                return File(mergedImage, "image/png");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error merging images.");
-            }
-        }
+     
     }
 }
