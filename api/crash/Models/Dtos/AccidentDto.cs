@@ -19,7 +19,11 @@ namespace Crash.Models.Dtos
 
         public List<PartyDetailDto> parties { get; set; }
 
-        public string Description { get; set; }
+ 
+        public string EventData { get; set; }
+ 
+        public string? Description { get; set; }
+ 
         
     }
 }

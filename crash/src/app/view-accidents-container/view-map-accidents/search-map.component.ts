@@ -434,7 +434,7 @@ export class SearchMapComponent  implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      //console.log('Map dialog closed');
+      
     });
   }
 }

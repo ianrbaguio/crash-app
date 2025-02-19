@@ -92,5 +92,7 @@ namespace Crash.Controllers
         AccidentImageDto imageDto = await _mediatr.Send(new GetImagesByAccidentIdQuery() {AccidentId = accidentId});        
          return imageDto;
       }
+
+     
     }
 }

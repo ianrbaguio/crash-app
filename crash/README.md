@@ -1,3 +1,23 @@
+**Please Update your Environment variables as follows:
+**
+export const environment = {
+    production: false,
+    WEATHER_API_KEY :"",
+    GOOGLE_API_KEY:"",
+    GOOGLE_NEARBY_Endpoint : "https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
+    GOOGLE_NEARBY_PLACES_Endpoint : "https://places.googleapis.com/v1/places:searchNearby",
+    WEATHER_Endpoint : "https://api.openweathermap.org/data/2.5/weather?units=metric",
+    PLACES_Endpoint: "https://maps.googleapis.com/maps/api/place/details/json?fields=name%2Cformatted_phone_number%2Cicon",
+    ROAD_Endpoint: "https://roads.googleapis.com/v1/speedLimits?",
+    Crash_API_Endpoint: "https://localhost:44324",
+    CarVIN_API_Endpoint: "https://carapi.app/api/vin/",
+    Geoapify_API_Endpoint: "https://api.geoapify.com/",
+    Geoapify_API_KEY: ""
+  };
+  
+
+
+
 # Crash
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.

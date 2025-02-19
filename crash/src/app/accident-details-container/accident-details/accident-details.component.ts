@@ -21,8 +21,8 @@ import { IPartyDetails } from '../../../shared/iparty-details';
   selector: 'crash-accident-details',
 
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule,
-    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent, SearchMapComponent, MatTableModule],
+  imports: [CommonModule, ReactiveFormsModule,
+    MatFormFieldModule, MatDatepickerModule, AccidentMapComponent,  MatTableModule],
     providers: [CrashService,CurrencyPipe ],
   templateUrl: './accident-details.component.html',
   styleUrl: './accident-details.component.scss'
@@ -112,8 +112,6 @@ createGmapLATLANG(LAT:any, LNG:any){
         lng:LNG
     }
 
-    console.log("createGmapLATLANG"  )
-    //console.log(  this.center)
 }
 formatTime(time: string) {
   return new Date(time).toLocaleTimeString();

@@ -1,10 +1,10 @@
 
 
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule} from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { CrashService } from '../../crash.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environment';
   selector: 'crash-map',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, RouterOutlet, GoogleMapsModule,  MatExpansionModule, ReactiveFormsModule,
+  imports: [CommonModule, GoogleMapsModule,  MatExpansionModule, ReactiveFormsModule,
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
@@ -25,8 +25,8 @@ import { environment } from '../../../environments/environment';
 
 
 export class MapComponent implements OnInit {
-
-  constructor(private crashservice: CrashService) { }
+  constructor(private crashservice: CrashService, private http: HttpClient) { }
+ 
 
   loadAPIMapscript() {
 
@@ -46,7 +46,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     // use googlemaps/js-api-loader to dynamically load google scripts, this is needed so that
     // we dont need to use google script url with exposed hardcoded API_Key in index.html
-    // this.loadAPI();
+  
     this.loadAPIMapscript()
   }
  
@@ -74,11 +74,14 @@ export class MapComponent implements OnInit {
   public weathericon: string = '';
   public location: string = '';
   public weatherconditions: string = '';
+  public eventData: string='';
 
   @Output() m_weather = new EventEmitter<string>()
   @Output() m_address = new EventEmitter<string>();
   @Output() m_weathericon = new EventEmitter<string>();
   @Output() m_latng = new EventEmitter<google.maps.LatLngLiteral>();
+  @Output() m_eventdata = new EventEmitter<string | null>();
+  @Output() m_streetview = new EventEmitter<any | null>();
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = (event.latLng.toJSON());
     if (event.latLng != null)
@@ -113,21 +116,20 @@ export class MapComponent implements OnInit {
 
     this.setWeather();
     this.setInfoFromAddress(this.center);
- 
-    //this.searchNearLandmark(this.center); -- placesAPI is call spits cross-origin error
+    this.searchNearLandmark(this.center); 
+    this.getSpeedLimit();  
   }
 
   setInfoFromAddress(latlng: any) {
     let infowindow = new google.maps.InfoWindow();
-
     this.crashservice.getInfoFromAddress(latlng)
       .then((response) => {
         if (response.results[0]) {
-
+  
           this.location = response.results[0].formatted_address;
           infowindow.setContent(response.results[0].formatted_address);
           this.m_address.emit(this.location);
-
+          this.getStreetViewImage(latlng);
         } else {
           window.alert("No results found");
         }
@@ -136,23 +138,60 @@ export class MapComponent implements OnInit {
 
 
   }
-  //RoadAPI calls requires premium subscription
-  getSpeedLimit(addresses: any) {
-    let places = "placeID=";
-    for (let i = 0; i < addresses.length; i++) {
-      places += addresses[i].place_id + "&"
-    }
+  getView(url: string) {
+    return "";
+  }
+  getStreetViewImage(latlng: any) {
+    const streetViewService = new google.maps.StreetViewService();
+    const STREETVIEW_MAX_DISTANCE = 50;
+
+    streetViewService.getPanorama({ location: latlng, radius: STREETVIEW_MAX_DISTANCE }, (data, status) => {
+      if (status === google.maps.StreetViewStatus.OK) {
+        if (data && data.location) {
+          const panorama = data.location.pano;
+          const streetViewImageUrl = `https://maps.googleapis.com/maps/api/streetview?size=600x300&pano=${panorama}&key=${environment.GOOGLE_API_KEY}`;
+          this.fetchAndStoreImage(streetViewImageUrl)     
+        } else {
+          window.alert("Street View data not available.");
+        }
+      } else {
+        window.alert("Street View not available at this location.");
+        this.m_streetview.emit(null);
+      }
+    });
+  }
+ 
+// save the streetview as default image
+private fetchAndStoreImage(url: string) {
+  this.http.get(url, { responseType: 'blob' }).subscribe(blob => {
+    this.m_streetview.emit(blob);
+  });
+}
+
+  getSpeedLimit() {
+    let addresses:google.maps.LatLngLiteral[]=[];
+    addresses.push(this.center);
+    this.crashservice.getSpeedLimit(addresses).subscribe(
+      (res: any) => {
+        this.eventData = res;
+        this.m_eventdata.emit(this.eventData);
+      },
+      (error: any) => {
+          console.error('Error 400: Bad Request', error);
+          this.m_eventdata.emit(null);     
+      }
+    );
 
   }
   searchNearLandmark(latlng: any) {
-    this.crashservice.getNearbyPlaces(latlng.lat, latlng.lng)
+    this.crashservice.getNearbyPlacesV2(latlng.lat, latlng.lng)
       .subscribe(
-        (res: any) => {
-      
+        (res: any) => {       
+           
         });
 
   }
-    
+  
   setWeather() {
 
     const radius = 1000;
@@ -165,11 +204,12 @@ export class MapComponent implements OnInit {
             this.WeatherData.main.temp + " C Wind Speed: " +
             this.WeatherData.wind.speed + " kph Gust: " +
             this.WeatherData.wind.gust + " kph Visibility: " +
-            this.WeatherData.visibility;
-          this.weathericon = this.WeatherData.weather[0].icon;
-          this.m_weather.emit(this.weatherconditions);
-          this.m_weathericon.emit(this.WeatherData.weather[0].icon)
-          this.m_latng.emit(this.center);
+             this.WeatherData.visibility;
+            this.weathericon = this.WeatherData.weather[0].icon;
+             this.m_weather.emit(this.weatherconditions);
+            this.m_weathericon.emit(this.WeatherData.weather[0].icon)
+            this.m_latng.emit(this.center);
+      
         });
 
 

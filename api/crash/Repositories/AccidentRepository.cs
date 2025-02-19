@@ -8,8 +8,8 @@ using Crash.Models.Dtos;
 using Crash.Repositories.IRepositories;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
-
 using System.Collections.Generic;
+using Image = Crash.Models.Entities.Image;
 
 
 namespace Crash.Repositories
@@ -142,6 +142,8 @@ namespace Crash.Repositories
             return parties;
 
         }
+
+      
     }
 
 }

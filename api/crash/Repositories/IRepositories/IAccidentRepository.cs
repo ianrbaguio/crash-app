@@ -19,6 +19,6 @@ namespace Crash.Repositories.IRepositories
 
         public Task<List<Image>> GetImagesByAccidentIdAsync(Guid accidentId);
         public Task<List<Party>>  GetAccidentPartiesAsync(Guid accidentId);
-
+      
     }
 }
