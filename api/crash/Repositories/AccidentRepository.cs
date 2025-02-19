@@ -9,7 +9,6 @@ using Crash.Repositories.IRepositories;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Collections.Generic;
-using System.Drawing;
 using Image = Crash.Models.Entities.Image;
 
 
