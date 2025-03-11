@@ -1,7 +1,7 @@
 <br>
 <div mat-dialog-title class="dialog-title">
   <h1 mat-dialog-title>Party Details Information</h1>
-  <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+  <button mat-icon-button class="btn-close-dialog" aria-label="close dialog" mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
 </div>
@@ -167,7 +167,7 @@
   <mat-dialog-actions align="center">
     <button
       mat-button mat-dialog-close
-      class="text-sm font-semibold leading-6 text-gray-900"
+      class="btn-cancel text-sm font-semibold leading-6 text-gray-900"
       (click)="onNoClick()"
     >
       Cancel
@@ -175,7 +175,7 @@
     &nbsp; &nbsp; &nbsp; &nbsp;
     <button
       mat-button  
-      class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      class="btn-save rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       cdkFocusInitial
       (click)="onSubmit()"
     >

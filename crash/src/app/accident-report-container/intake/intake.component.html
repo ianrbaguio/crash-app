@@ -93,7 +93,7 @@
       <div class="form-group">
         <div *ngIf="PartyFieldsGenerated">
           <div formArrayName="dynamicParties">
-            <div *ngFor="let input of dynamicParties.controls; let i = index">
+            <div *ngFor="let input of dynamicParties.controls; let i = index" [ngClass]="'numberparties party-' + (i+1)" id="party-{{i+1}}">
               <!--       <mat-accordion [formControlName]="'mat-accordion'+i">
                       <mat-expansion-panel [formControlName]="'mat-panel'+i"> -->
 
@@ -207,13 +207,13 @@
             <img #previewRef2  class="preview" />
           </div>
           <br>
-          <crash-upload-images
+          <crash-upload-images class = "crash-upload component-1"
             (m_image)="setImage1($event)"
           ></crash-upload-images>
-          <crash-upload-images
+          <crash-upload-images  class = "crash-upload component-2"
             (m_image)="setImage2($event)"
           ></crash-upload-images>
-          <crash-upload-images
+          <crash-upload-images  class = "crash-upload component-3"
             (m_image)="setImage3($event)"
           ></crash-upload-images>
         </div>
@@ -221,7 +221,7 @@
       <br />
       <button
         type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="btn-submit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Submit
       </button>
