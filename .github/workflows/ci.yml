@@ -10,6 +10,14 @@ jobs:
         with:
           node-version: "18"
       - run: cd crash && npm i
+  front-end-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: cd crash && npm i && npm run lint
   dotnet-build:
     runs-on: ubuntu-latest
     steps:
