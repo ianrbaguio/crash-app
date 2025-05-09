@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common'; 
 import { CrashService } from '../../crash.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MatDialogModule,
   MAT_DIALOG_DEFAULT_OPTIONS,
@@ -54,7 +55,8 @@ export interface IPartyDetails {
     MatDialogTitle,
     MatDialogContent,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './partydialog.component.html',
   styleUrl: './partydialog.component.scss',
@@ -71,6 +73,7 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
     insuranceNumber: new FormControl('', [Validators.required])
   });
   result!: IPartyDetails;
+  isOcrLoading: boolean = false;
 
   ngOnInit() {}
 
@@ -115,4 +118,39 @@ export class PartydialogComponent implements OnInit, AfterViewInit {
   onNoClick(): void {
     this.dialogRef.close();
   }  
+
+  onLicenseImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+    this.isOcrLoading = true;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('http://localhost:5119/api/accidents/upload-license', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.first_name) {
+          this.form.controls['firstName'].setValue(data.first_name);
+        }
+        if (data.last_name) {
+          this.form.controls['lastName'].setValue(data.last_name);
+        }
+        if (data.driver_license) {
+          this.form.controls['licenseNumber'].setValue(data.driver_license);
+        }
+        if (data.address) {
+          this.form.controls['address'].setValue(data.address);
+        }
+        this.isOcrLoading = false;
+      })
+      .catch(error => {
+        console.error('OCR upload failed', error);
+        this.isOcrLoading = false;
+      });
+  }
+
 }

@@ -93,6 +93,65 @@ namespace Crash.Controllers
          return imageDto;
       }
 
-     
+      
+      [HttpPost("upload-license")]
+      public async Task<IActionResult> UploadLicenseImage(IFormFile file)
+      {
+        if (file == null || file.Length == 0)
+        return BadRequest("No file uploaded.");
+
+        try
+        {
+          // 1. Save image to OCR temp folder
+          var apiBasePath = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
+          var ocrPath = Path.Combine(apiBasePath, "ocr");
+          var ocrTempPath = Path.Combine(ocrPath, "temp");
+          if (!Directory.Exists(ocrTempPath))
+            Directory.CreateDirectory(ocrTempPath);
+
+          var imagePath = Path.Combine(ocrTempPath, "license.png");
+
+          using (var stream = new FileStream(imagePath, FileMode.Create))
+          {
+              await file.CopyToAsync(stream);
+          }
+
+          // 2. Call ocr.py with the image path
+          var psi = new System.Diagnostics.ProcessStartInfo
+          {
+              FileName = "python",
+              Arguments = $"ocr.py \"{imagePath}\"",
+              WorkingDirectory = ocrPath, 
+              RedirectStandardOutput = true,
+              RedirectStandardError = true,
+              UseShellExecute = false,
+              CreateNoWindow = true
+          };
+
+          using var process = System.Diagnostics.Process.Start(psi);
+          string output = await process.StandardOutput.ReadToEndAsync();
+          string error = await process.StandardError.ReadToEndAsync(); 
+          process.WaitForExit();
+
+          if (process.ExitCode != 0)
+          {
+              Console.WriteLine("Python script failed:");
+              Console.WriteLine(error);
+              return StatusCode(500, $"Python script error: {error}");
+          }
+          Console.WriteLine("Python output:");
+          Console.WriteLine(output);
+          var result = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(output);
+          return Ok(result);
     }
+    catch (Exception ex)
+    {
+          return StatusCode(500, $"Server error: {ex.Message}");
+    }
+      }
+     
+
+    }
+
+
 }

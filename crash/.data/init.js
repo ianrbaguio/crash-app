@@ -8,7 +8,7 @@ const dbConfig = {
   password: "postgres",
   host: "localhost",
   port: "5432",
-  database: "crash",
+  database: "Crash",
 };
 
 // Create a new PostgreSQL client

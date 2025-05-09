@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "guid-typescript": "^1.0.9"
+    "guid-typescript": "^1.0.9",
+    "pg": "^8.11.3"
+  },
+  "scripts": {
+    "postgres-init": "node init.js"
   }
 }

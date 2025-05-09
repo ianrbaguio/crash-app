@@ -38,7 +38,7 @@ export class CrashService {
       'X-Goog-FieldMask': 'places.displayName,places.primaryType,places.types'
     });
 
-    return this.http.post(`${environment.GOOGLE_NEARBY_PLACES_Endpoint}`, requestBody, { headers });
+    return this.http.post(`${environment.GOOGLE_NEARBY_Endpoint}`, requestBody, { headers });
   }
 
 
